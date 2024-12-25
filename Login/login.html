@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <div id='login-signup'>
+        <div class='main'>
+            <p class='message' style="display: none;">
+                {message}
+            </p>
+            <input type='checkbox' id='chk' aria-hidden='true' />
+
+            <div class='signup'>
+                <form onSubmit="">
+                    <label for='chk' aria-hidden='true'>
+                        Sign up
+                    </label>
+                    <input type='text' name='name' placeholder='Full Name' autoComplete='off' required />
+                    <input type='email' name='email' placeholder='Email' autoComplete='off' required />
+                    <input type='password' name='password' placeholder='Password' autoComplete='off' required />
+                    <input type='submit' value='Sign up' />
+                </form>
+            </div>
+
+            <div class='login'>
+                <form onSubmit="">
+                    <label for='chk' aria-hidden='true'>
+                        Login
+                    </label>
+                    <input type='email' name='email' placeholder='Email' autoComplete='off' required />
+                    <input type='password' name='password' placeholder='Password' autoComplete='off' required />
+                    <input type='submit' value='Login' />
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
