@@ -15,17 +15,19 @@
     <script src="../resources/jq-3-7-1.js"></script>
     <style>
       h3 {
-        font-size: 3.5vw;
+        font-size: calc(2vw + 0.5rem) ;
+        margin-bottom: 25px;
       }
       h6 {
-        font-size: 2.5vw;
+        font-size: calc(1vw + 0.5rem);
       }
       input {
-        font-size: 3vw;
+        font-size: calc(1vw + 0.5rem);
+        margin-bottom: 5px;
       }
       .cart:hover{
         background-color: black !important;
-        transform: scale(1.2);
+        transform: scale(1.1);
         transition: 2s;
         color: white;
     }
@@ -37,8 +39,7 @@
       }
       .checkout:hover{
         background-color: #0dcaf0 !important;
-        ;
-        transform: scale(1.2);
+        transform: scale(1.1);
         transition: 2s;
         color: white;
     }
@@ -48,19 +49,27 @@
         transition: 2s;
       }
       label{
-        font-size: 3vw;
+        font-size: calc(0.5rem + 1vw);
+        margin-top: 8px;
       }
       .form-control{
-        height: 6vw;
+        height: calc(1.5vw + 1rem);
       }
       #checkout-btn{
+        width: 60%;
+        height: calc(2vw + 1rem);
         padding: 3px;
-        font-size: 3vw;
+        font-size: calc(1vw + 0.5rem);
+    }
+    #checkout-btn:hover{
+      background-color: #637e84;
+      color:white;
+      transition: 1s;
     }
     a{
         color: #0dcaf0;
         text-decoration: none;
-        font-size: 4vw;
+        font-size: calc(1.5vw + 0.5rem);
         
       }
       a:hover {
@@ -70,13 +79,13 @@
     </style>
   </head>
   <body>
-    <div class="d-flex m-3 text-center">
+    <div class="main-wrapper d-flex my-3 mx-auto  col-sm-11 col-md-10 col-lg-9 col-xl-8 col-xl-6 text-center">
       <div
-        class="cart col-8 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-start-5 shadow-lg"
+        class="cart col-8 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-start-5"
       >
         <h3 class="text-info mt-2">Shopping Cart</h3>
         <div class="container mt-3">
-          <div class="item d-flex justify-content-evenly align-items-center">
+          <div class="item d-flex justify-content-center align-items-center">
             <img
               class="col-3 border border-black p-sm-2 rounded-3 m-2 flex-grow-1"
               src="./iphone 15.jpg"
@@ -87,14 +96,14 @@
               <h6 >256GB, Grey</h6>
             </div>
             <div class="controls col-4 d-sm-flex justify-content-sm-evenly">
-              <input class="bg-info border-0 rounded px-2" type="button" value="-" />
+              <input class="bg-info border-0 rounded " type="button" value="+" />
               <h6 class="fw-medium m-0">1</h6>
-              <input class="bg-info border-0 rounded" type="button" value="+" />
+              <input class="bg-info border-0 rounded px-2" type="button" value="-" />
             </div>
             <i class="col-2 bi bi-trash3-fill pointer-event"></i>
         </div>
         <hr class="bg-black">
-          <div class="item d-flex justify-content-evenly align-items-center">
+          <div class="item d-flex justify-content-center align-items-center">
             <img
               class="col-3 border border-black p-sm-2 rounded-3 m-2 flex-grow-1"
               src="./iphone 15.jpg"
@@ -105,9 +114,9 @@
               <h6 >256GB, Grey</h6>
             </div>
             <div class="controls col-4 d-sm-flex justify-content-sm-evenly">
-              <input class="bg-info border-0 px-2 rounded" type="button" value="-" />
+              <input class="bg-info border-0  rounded" type="button" value="+" />
               <h6 class="fw-medium m-0">1</h6>
-              <input class="bg-info border-0 rounded" type="button" value="+" />
+              <input class="bg-info border-0 px-2 rounded" type="button" value="-" />
             </div>
             <i class="col-2 bi bi-trash3-fill"></i>
           </div>
@@ -120,7 +129,7 @@
         class="checkout col-4 p-2 bg-info bg-gradient bg-opacity-50 p-sm-2 rounded-end-5 shadow-lg"
       >
         <h3 class="text-dark mt-2">Checkout</h3>
-        <form action="">
+        <form class="d-flex flex-column justify-content-evenly align-items-center" action="">
             <label class="form-label" for="card-name">Name on card</label>
             <input class="form-control" type="text" name="card-name" id="card-name">
             <label class="form-label" for="card-number">card number</label>

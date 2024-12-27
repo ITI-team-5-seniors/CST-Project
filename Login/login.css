@@ -13,7 +13,7 @@
 	overflow: hidden;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
-	background: rgb(255, 183, 0);
+	background:  #0dcaf0
 }
 
 #login-signup #chk {
@@ -84,7 +84,7 @@
 }
 
 #login-signup .login label {
-	color: rgb(255, 183, 0);
+	color:  #0dcaf0;
 	transform: scale(0.6);
 }
 
@@ -97,7 +97,7 @@
 	line-height: 1.8;
 	font-weight: bold;
 	text-align: center;
-	color: rgb(255, 183, 0);
+	color:  #0dcaf0;
 	background-color: #333333e0;
 	position: absolute;
 	z-index: 2;
