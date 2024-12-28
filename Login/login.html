@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./login.css" />
+    <script src="./jq-3-7-1.js"></script>
+    <script src="signup.js"></script>
     <script src="login.js"></script>
   </head>
   <body>
     <div id="login-signup">
       <div class="main">
-        <p class="message" style="display: none">{message}</p>
+        <p id="message" style="display: none"></p>
         <input type="checkbox" id="chk" aria-hidden="true" />
 
         <div class="signup">
-          <form id="signupForm">
+          <form id="signup-Form">
             <label for="chk" aria-hidden="true"> Sign up </label>
             <input
               type="text"
@@ -43,20 +45,19 @@
             <input type="submit" value="Sign up" />
           </form>
         </div>
-
         <div class="login">
-          <form onSubmit="">
+          <form id="login-form">
             <label for="chk" aria-hidden="true"> Login </label>
             <input
               type="email"
-              name="email"
+              id="login-email"
               placeholder="Email"
-              autocomplete="off"
+              autocomplete="on"
               required
             />
             <input
               type="password"
-              name="password"
+              id="login-password"
               placeholder="Password"
               autocomplete="off"
               required
