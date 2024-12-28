@@ -1,0 +1,34 @@
+project/
+│
+├── assets/
+│   ├── css/
+│   │   ├── style.css          # Custom styles
+│   │   ├── bootstrap.min.css  # Bootstrap CSS
+│   │
+│   ├── js/
+│   │   ├── main.js            # Core JavaScript logic
+│   │   ├── auth.js            # Authentication logic
+│   │   ├── cart.js            # Shopping cart interactions
+│   │   ├── seller.js          # Seller functionalities
+│   │   ├── admin.js           # Admin-specific actions
+│   │
+│   ├── images/                # Product images
+│   └── fonts/                 # Optional: custom fonts
+│
+├── views/
+│   ├── index.html             # Home page
+│   ├── catalog.html           # Product catalog page
+│   ├── product-details.html   # Product details page
+│   ├── cart.html              # Shopping cart page
+│   ├── checkout.html          # Checkout page
+│   ├── dashboard/
+│   │   ├── seller.html        # Seller dashboard
+│   │   ├── admin.html         # Admin dashboard
+│   │
+├── data/                      # (Optional: Simulated JSON files)
+│   ├── products.json          # Predefined product data
+│   ├── users.json             # Predefined user data
+│   ├── orders.json            # (Optional) Predefined order data
+│
+├── index.html                 # Entry point of the app
+└── README.md                  # Documentation
