@@ -62,12 +62,11 @@ select{
 	height: 35px;
 	background: #e0dede;
 	justify-content: center;
-	display: flex;
+	display: none;
 	margin: 20px auto;
 	border: none;
 	outline: none;
 	border-radius: 5px;
-
 }
 
 #login-signup input[type="submit"] {
@@ -80,7 +79,7 @@ select{
 	background: #333;
 	font-size: 1em;
 	font-weight: bold;
-	margin-top: 20px;
+	margin-top: 30px;
 	outline: none;
 	border: none;
 	border-radius: 5px;
