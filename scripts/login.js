@@ -21,7 +21,7 @@ $(function () {
 
     users.some((user) => {
       if (user.email == email && user.password == password) {
-        window.location = 'finalheader.html';
+        window.location = 'HEADER.html';
         return true;
       } else {
         displayMessage('incorrect email or password');
