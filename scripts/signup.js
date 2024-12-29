@@ -9,17 +9,18 @@ function displayMessage(message) {
       const username = $('#username').val();
       const email = $('#email').val();
       const password = $('#password').val();
+      const role = $('#role').val();
 
       $('#message').on('click', function () {
         $(this).css({ display: 'none' });
       });
 
-      if (validateForm(username, email, password)) {
-        addUser(username, email, password);
+      if (validateForm(username, email, password, role)) {
+        addUser(username, email, password, role);
       }
     });
 
-    function validateForm(username, email, password) {
+    function validateForm(username, email, password, role) {
       const usernameRegex = /^(([A-Z]|[a-z]){2,}(-|_)?([a-z]|[A-Z])+)+$/;
       const emailRegex =
         /^([a-z]|[A-Z])+([a-z]|[A-Z]|-|_|[1-9]){2,}[@]([a-z]|[A-Z])+(\.com)$/;
@@ -43,7 +44,7 @@ function displayMessage(message) {
       return true;
     }
 
-    function addUser(username, email, password) {
+    function addUser(username, email, password ,role) {
       const users = JSON.parse(localStorage.getItem('users')) || [];
       const userExists = users.some((user) => user.username === username);
       const emailExists = users.some((user) => user.email === email);
@@ -55,7 +56,7 @@ function displayMessage(message) {
       } else if (emailExists) {
         displayMessage('email already exists. Please choose another one.');
       } else {
-        const newUser = { username, email, password };
+        const newUser = { username, email, password, role };
         users.push(newUser);
         localStorage.setItem('users', JSON.stringify(users));
         displayMessage('User added successfully!');

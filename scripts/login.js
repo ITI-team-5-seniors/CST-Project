@@ -21,7 +21,17 @@ $(function () {
 
     users.some((user) => {
       if (user.email == email && user.password == password) {
-        window.location = 'HEADER.html';
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        userRole = user.role
+        if (userRole === 'admin') {
+          window.location = 'admin.html';
+          // Show admin-specific content
+        } else if (userRole === 'seller') {
+          window.location = 'seller.html';
+          // Show seller-specific content
+        } else 
+          window.location = 'customer.html';
+          // Show customer-specific content
         return true;
       } else {
         displayMessage('incorrect email or password');

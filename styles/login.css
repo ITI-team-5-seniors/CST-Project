@@ -35,7 +35,7 @@
 	font-size: 2.3em;
 	justify-content: center;
 	display: flex;
-	margin: 60px;
+	margin: 40px;
 	font-weight: bold;
 	cursor: pointer;
 	user-select: none;
@@ -44,7 +44,8 @@
 
 #login-signup input[type="text"],
 #login-signup input[type="password"],
-#login-signup input[type="email"] {
+#login-signup input[type="email"]
+{
 	width: 60%;
 	height: 20px;
 	background: #e0dede;
@@ -56,11 +57,23 @@
 	outline: none;
 	border-radius: 5px;
 }
+select{
+	width: 65%;
+	height: 35px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+
+}
 
 #login-signup input[type="submit"] {
 	width: 60%;
 	height: 40px;
-	margin: 10px auto;
+	margin: 20px auto;
 	justify-content: center;
 	display: block;
 	color: #fff;
@@ -83,7 +96,7 @@
 	height: 460px;
 	background: #eee;
 	border-radius: 60% / 10%;
-	transform: translateY(-180px);
+	transform: translateY(-150px);
 	transition: 0.8s ease-in-out;
 }
 
