@@ -12,71 +12,85 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="../styles/cart.css">
-    
+    <link rel="stylesheet" href="../styles/cart.css" />
+    <script src="../scripts/jq-3-7-1.js"></script>
+    <script src="../scripts/cart.js"></script>
   </head>
   <body>
-    <div class="main-wrapper d-flex my-3 mx-auto  col-sm-11 col-md-10 col-lg-9 col-xl-8 col-xl-6 text-center">
+    <div
+      class="main-wrapper d-flex flex-column align-items-center flex-sm-row my-3 mx-auto col-sm-11 col-md-10 col-lg-9 col-xl-8 col-xl-6 text-center"
+    >
       <div
-        class="cart col-8 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-start-5"
+        class="cart col-10 col-sm-8 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-2"
       >
         <h3 class="text-info mt-2">Shopping Cart</h3>
         <div class="container mt-3">
-          <div class="item d-flex justify-content-center align-items-center">
+          <div class="item p-3 d-flex justify-content-center align-items-center">
             <img
-              class="col-3 border border-black p-sm-2 rounded-3 m-2 flex-grow-1"
+              class="col-3 border border-black p-sm-2 rounded-3 m-2"
               src="../Photos/iphone 15.jpg"
               alt=""
             />
-            <div class="col-3">
-              <h6 >iphone</h6>
-              <h6 >256GB, Grey</h6>
+            <div class="col-3 mx-2 ">
+              <h6>iphone</h6>
+              <h6>256GB, Grey</h6>
             </div>
-            <div class="controls col-4 d-sm-flex justify-content-sm-evenly">
-              <input class="bg-info border-0 rounded " type="button" value="+" />
-              <h6 class="fw-medium m-0">1</h6>
-              <input class="bg-info border-0 rounded px-2" type="button" value="-" />
+            <div class="controls col-3 d-sm-flex justify-content-center">
+              <input class="bg-info border-0 rounded" id="increment" type="button" value="+" />
+              <h6 class="fw-medium m-2" id="item-quantity">1</h6>
+              <input
+                class="bg-info border-0 rounded px-2"
+                id="decrement"
+                type="button"
+                value="-"
+              />
             </div>
-            <i class="col-2 bi bi-trash3-fill pointer-event"></i>
-        </div>
-        <hr class="bg-black">
-          <div class="item d-flex justify-content-center align-items-center">
-            <img
-              class="col-3 border border-black p-sm-2 rounded-3 m-2 flex-grow-1"
-              src="../Photos/iphone 15.jpg"
-              alt=""
-            />
-            <div class="col-3 my-3">
-              <h6 >iphone</h6>
-              <h6 >256GB, Grey</h6>
-            </div>
-            <div class="controls col-4 d-sm-flex justify-content-sm-evenly">
-              <input class="bg-info border-0  rounded" type="button" value="+" />
-              <h6 class="fw-medium m-0">1</h6>
-              <input class="bg-info border-0 px-2 rounded" type="button" value="-" />
-            </div>
-            <i class="col-2 bi bi-trash3-fill"></i>
+            <h6 class="col-2" id="item-price">100$</h6>
+            <i class="col-1 m-2 bi bi-trash3-fill pointer-event"></i>
           </div>
+          <hr class="bg-black" />
+          <div class="item p-3 d-flex justify-content-center align-items-center">
+            <img
+              class="col-3 border border-black p-sm-2 rounded-3 m-2"
+              src="../images/8.png"
+              alt=""
+            />
+            <div class="col-3 mx-2 ">
+              <h6>Samsung S24 ultra</h6>
+              <h6>1TB, Black</h6>
+            </div>
+            <div class="controls col-3 d-sm-flex justify-content-center">
+              <input class="bg-info border-0 rounded" id="increment" type="button" value="+" />
+              <h6 class="fw-medium m-2" id="item-quantity">1</h6>
+              <input
+                class="bg-info border-0 rounded px-2"
+                id="decrement"
+                type="button"
+                value="-"
+              />
+            </div>
+            <h6 class="col-2" id="item-price">200$</h6>
+            <i class="col-1 m-2 bi bi-trash3-fill pointer-event"></i>
+          </div>
+          <hr class="bg-black" />
         </div>
-        <a class="icon-link" style="--bs-link-hover-color-rgb: #0dcaf0;" href="#">
-           <span>&#8592;</span>  Go shopping
-          </a>    
+        <a class="icon-link mb-3" href="#">
+          <span>&#8592;</span> Go shopping
+        </a>
       </div>
       <div
-        class="checkout col-4 p-2 bg-info bg-gradient bg-opacity-50 p-sm-2 rounded-end-5 shadow-lg"
+        class="summary col-10 col-sm-4 align-self-sm-stretch d-flex flex-column justify-content-center align-items-center p-2 bg-info bg-gradient bg-opacity-50 px-4 p-sm-2 rounded-2 shadow-lg"
       >
-        <h3 class="text-dark mt-2">Checkout</h3>
-        <form class="d-flex flex-column justify-content-evenly align-items-center" action="">
-            <label class="form-label" for="card-name">Name on card</label>
-            <input class="form-control" type="text" name="card-name" id="card-name">
-            <label class="form-label" for="card-number">card number</label>
-            <input class="form-control" type="text" name="card-number" id="card-number">
-            <label class="form-label" for="exp-date">exp date</label>
-            <input class="form-control" type="text" name="exp-date" id="exp-date">
-            <label class="form-label" for="cvv">cvv</label>
-            <input class="form-control" type="text" name="cvv" id="cvv">
-            <input class="form-control my-3" type="button" name="checkout" id="checkout-btn" value="checkout">
-        </form>
+        <h3 class="text-dark mt-3 fw-">
+          Total : <span class="fw-bolder" id="total"> 1000 $</span>
+        </h3>
+        <input
+          class="form-control pb-4 mb-3 fw-bolder"
+          type="button"
+          name="checkout"
+          id="checkout-btn"
+          value="Proceed to checkout"
+        />
       </div>
     </div>
   </body>
