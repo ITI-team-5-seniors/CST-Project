@@ -20,18 +20,20 @@ $(function () {
     const users = JSON.parse(localStorage.getItem('users'));
 
     users.some((user) => {
-      if (user.email == email && user.password == password) {
+
+      const bytes = CryptoJS.AES.decrypt(user.encryptedPassword, key);
+      const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+      if (user.email == email && decryptedPassword == password) {
         localStorage.setItem('currentUser', JSON.stringify(user));
-        userRole = user.role
+        userRole = user.role;
         if (userRole === 'admin') {
           window.location = 'admin.html';
           // Show admin-specific content
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
           // Show seller-specific content
-        } else 
-          window.location = 'customer.html';
-          // Show customer-specific content
+        } else window.location = 'customer.html';
+        // Show customer-specific content
         return true;
       } else {
         displayMessage('incorrect email or password');

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <script src="../scripts/jq-3-7-1.js"></script>
+    <script src="../scripts/productLogic.js" type="module"></script>
+</head>
+<body>
+    <h1>Product Listing</h1>
+    <div id="product-list"></div>
+
+    <script type="module">
+        import { getProducts, addToCart } from '../scripts/productLogic.js';
+
+        $(document).ready(() => {
+            const products = getProducts();
+            const $productList = $('#product-list');
+
+            products.forEach(product => {
+                const $productDiv = $('<div>').addClass('product');
+                $productDiv.append($('<h2>').text(product.name));
+                $productDiv.append($('<p>').text(`Price: $${product.price.toFixed(2)}`));
+                $productDiv.append($('<p>').text(`Stock: ${product.stock}`));
+                
+                const $addToCartBtn = $('<button>').text('Add to Cart');
+                $addToCartBtn.on('click', () => {
+                    addToCart('customer123', product.id, 1);
+                    alert('Product added to cart!');
+                });
+                
+                $productDiv.append($addToCartBtn);
+                $productList.append($productDiv);
+            });
+        });
+    </script>
+</body>
+</html>
