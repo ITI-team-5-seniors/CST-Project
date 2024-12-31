@@ -20,16 +20,25 @@ input {
 .cart:hover{
   background-color: black !important;
   transform: scale(1.1);
-  transition: 2s;
+  transition: 0.5s;
   color: white;
 }
 img:hover{
     transform: scale(1.2);
-    transition: 2s;
+    transition: 0.5s;
     box-shadow: #0dcaf0 2px 2px 4px;
 
 }
+<<<<<<< HEAD
+.checkout:hover{
+  background-color: #0dcaf0 !important;
+  transform: scale(1.1);
+  transition: 0.5s; 
+  color: white;
+}
+=======
 
+>>>>>>> 6916f781757cc28a3c560afab256f25c68b079c3
 i:hover{
   cursor: pointer;
   transform: scale(1.5);
