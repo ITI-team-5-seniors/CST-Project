@@ -1,8 +1,12 @@
 *{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+h4 {
+  font-size: calc(1vw + 0.5rem) ;
+  margin-top: 25px;
+}
 h3 {
-  font-size: calc(2vw + 0.5rem) ;
+  font-size: calc(2vw + 0.7rem) ;
   margin-bottom: 25px;
 }
 h6 {
@@ -48,7 +52,8 @@ a:hover {
   transition: 2s;
   color: white;
 }
-
+hr{
+}
 #checkout-btn {
   height: calc(2vw + 1rem);
   font-size: calc(1vw + 0.5rem);
