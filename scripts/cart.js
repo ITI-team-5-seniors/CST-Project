@@ -33,6 +33,6 @@ $(function () {
     calculateTotal();
   });
   $('#checkout-btn').on('click', function () {
-    window.location = 'checkout.html';
+    window.location.href = `checkout.html?amount=${total}`;
   });
 });
