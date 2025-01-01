@@ -1,5 +1,5 @@
 // API URL for fetching products
-const API_URL = 'https://dummyjson.com/products';
+const API_URL = '../data/products_catalog.json';
 
 const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
 
@@ -108,6 +108,7 @@ const addToCart = (customerId, productId, quantity) => {
   }
 
   carts[customerId] = cart;
+  console.log(carts);
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
@@ -128,7 +129,7 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
     const product = products.find(p => p.id === item.productId);
     if (product) {
       orderTotal += product.price * item.quantity;
-      product.stock -= item.quantity;
+      product.stock -= item.quantity; 
     }
   });
 
