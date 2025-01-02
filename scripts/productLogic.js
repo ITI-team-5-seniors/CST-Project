@@ -21,7 +21,7 @@ const fetchAndStoreProducts = () => {
 };
 
 // Initialize data in local storage
-const initializeData = () => {
+ const initializeData = () => {
   const initPromises = [];
 
   if (!localStorage.getItem('products')) {
