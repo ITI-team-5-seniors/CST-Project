@@ -7,7 +7,7 @@ $(function () {
     event.preventDefault();
 
     const email = $('#login-email').val();
-    const password = $('#login-password').val();
+    const password = $('#login-password').val(); 
 
     $('#message').on('click', function () {
       $(this).css({ display: 'none' });
@@ -25,9 +25,9 @@ $(function () {
       const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
       if (user.email == email && decryptedPassword == password) {
         localStorage.setItem('currentUser', JSON.stringify(user));
-        userRole = user.role;
+       const userRole = user.role;
         if (userRole === 'admin') {
-          window.location = 'admin.html';
+          window.location = 'admindashboard.html';
           // Show admin-specific content
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
