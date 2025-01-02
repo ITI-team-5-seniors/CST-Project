@@ -10,46 +10,58 @@
     />
     <link />
     <link rel="stylesheet" href="../styles/checkout.css" />
+    <script src="../scripts/jq-3-7-1.js"></script>
+    <script src="../scripts/checkout.js"></script>
   </head>
   <body>
+    <div id="message" style="display: none" class="col-10 col-sm-8 col-md-6 col-lg-4 my-5  flex-column justify-content-center p-4  bg-gradient bg-opacity-50 p-sm-8 rounded-5 shadow-lg"  >
+    </div>
     <div
-      class="checkout col-10 col-sm-8 col-md-6 col-lg-4 mt-4 mx-auto p-4 bg-info bg-gradient bg-opacity-50 p-sm-8 rounded-5 shadow-lg"
+      class="checkout col-10 col-sm-8 col-md-6 col-lg-4 my-5 mx-auto p-4 bg-info bg-gradient bg-opacity-50 p-sm-8 rounded-5 shadow-lg"
     >
-      <h3 class="text-dark mt-2">Checkout</h3>
-      <div class="payments mb-3 d-flex justify-content-center">
-        <img src="../Photos/master card 2.png" alt="">
-        <img src="../Photos/visa transparent.png" alt="">
-        <img src="../Photos/paypal4.webp" alt="">
 
+      <h3 class="text-dark my-3">Checkout</h3>
+      <div class="payments my-4 d-flex justify-content-center">
+        <img src="../Photos/master card 2.png" alt="" />
+        <img src="../Photos/visa transparent.png" alt="" />
+        <img src="../Photos/paypal4.webp" alt="" />
       </div>
+      <div class="summary mt-5">
+        <h6 >Net price : <span></span>$</h6>
+        <h6 >Tax : <span></span>$</h6>
+        <h6 >Delivery : <span>10$</span></h6>
+        <hr>
+        <h6 >Total : <span></span>$</h6>
+      </div>
+      
       <form
         class="d-flex flex-column justify-content-evenly align-items-center"
-        action=""
       >
-        <label class="form-label" for="card-name">Name on card</label>
-        <input
-          class="form-control"
-          type="text"
-          name="card-name"
-          id="card-name"
-        />
         <label class="form-label" for="card-number">card number</label>
         <input
           class="form-control"
           type="text"
-          name="card-number"
+          maxlength="12"
           id="card-number"
+          placeholder="xxxx xxxx xxxx"
+          required
         />
         <label class="form-label" for="exp-date">exp date</label>
-        <input class="form-control" type="text" name="exp-date" id="exp-date" />
-        <label class="form-label" for="cvv">cvv</label>
-        <input class="form-control" type="text" name="cvv" id="cvv" />
         <input
           class="form-control"
-          type="button"
+          type="month"
+          id="exp-date"
+          placeholder="MM/YY"
+          required
+        /><!--min="2025-02"-->
+        <label class="form-label" for="cvv">CVV</label>
+        <input class="form-control" type="text" placeholder="xxx" maxlength="3" id="cvv" required/>
+        <input
+          class="form-control fw-bolder"
+          type="submit"
           name="checkout"
           id="checkout-btn"
-          value="checkout"
+          value="Place Order"
         />
       </form>
     </div>

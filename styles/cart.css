@@ -29,16 +29,6 @@ img:hover{
     box-shadow: #0dcaf0 2px 2px 4px;
 
 }
-<<<<<<< HEAD
-.checkout:hover{
-  background-color: #0dcaf0 !important;
-  transform: scale(1.1);
-  transition: 0.5s; 
-  color: white;
-}
-=======
-
->>>>>>> 6916f781757cc28a3c560afab256f25c68b079c3
 i:hover{
   cursor: pointer;
   transform: scale(1.5);
@@ -60,8 +50,6 @@ a:hover {
   transform: scale(1.1);
   transition: 2s;
   color: white;
-}
-hr{
 }
 #checkout-btn {
   height: calc(2vw + 1rem);

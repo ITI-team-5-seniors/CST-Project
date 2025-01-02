@@ -13,8 +13,8 @@ $(function () {
     const password = $('#password').val();
     const role = $('#role').val();
 
-    $('#message').on('click', function () {
-      $(this).css({ display: 'none' });
+    $('body').on('click', function () {
+      $("#message").css({ display: 'none' });
     });
 
     if (validateForm(username, email, password, role)) {
