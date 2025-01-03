@@ -1,8 +1,12 @@
 *{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+h4 {
+  font-size: calc(1vw + 0.5rem) ;
+  margin-top: 25px;
+}
 h3 {
-  font-size: calc(2vw + 0.5rem) ;
+  font-size: calc(2vw + 0.7rem) ;
   margin-bottom: 25px;
 }
 h6 {
@@ -25,16 +29,6 @@ img:hover{
     box-shadow: #0dcaf0 2px 2px 4px;
 
 }
-<<<<<<< HEAD
-.checkout:hover{
-  background-color: #0dcaf0 !important;
-  transform: scale(1.1);
-  transition: 0.5s; 
-  color: white;
-}
-=======
-
->>>>>>> 6916f781757cc28a3c560afab256f25c68b079c3
 i:hover{
   cursor: pointer;
   transform: scale(1.5);
@@ -57,7 +51,6 @@ a:hover {
   transition: 2s;
   color: white;
 }
-
 #checkout-btn {
   height: calc(2vw + 1rem);
   font-size: calc(1vw + 0.5rem);

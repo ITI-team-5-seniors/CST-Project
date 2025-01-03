@@ -1,17 +1,15 @@
 // API URL for fetching products
-const API_URL = 'https://dummyjson.com/products';
+const API_URL = '../data/products_catalog.json';
 
-// Helper function to generate a unique ID
 const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
 
-// Fetch products from API and store in local storage
 const fetchAndStoreProducts = () => {
   return $.ajax({
     url: API_URL,
     method: 'GET',
     dataType: 'json'
   }).then((response) => {
-    const products = response.products || []; // Ensure products is an array
+    const products = response.products || [];
     localStorage.setItem('products', JSON.stringify(products));
     return products;
   }).catch((error) => {
@@ -20,27 +18,47 @@ const fetchAndStoreProducts = () => {
   });
 };
 
+fetchAndStoreProducts().then((products) => {
+  console.log('Fetched products:', products);
+}).catch((error) => {
+  console.error('Error fetching products:', error);
+});
+
+
 // Initialize data in local storage
  const initializeData = () => {
   const initPromises = [];
 
   if (!localStorage.getItem('products')) {
-    initPromises.push(fetchAndStoreProducts());
+      console.log('Fetching products for initialization...');
+      initPromises.push(fetchAndStoreProducts());
   }
   if (!localStorage.getItem('carts')) {
-    localStorage.setItem('carts', JSON.stringify({}));
+      localStorage.setItem('carts', JSON.stringify({}));
   }
   if (!localStorage.getItem('orders')) {
-    localStorage.setItem('orders', JSON.stringify([]));
+      localStorage.setItem('orders', JSON.stringify([]));
   }
 
-  return $.when(...initPromises);
+  return $.when(...initPromises).done(() => {
+      console.log('Data initialized.');
+  }).fail((error) => {
+      console.error('Initialization failed:', error);
+  });
 };
+
 
 // Product related functions
 const getProducts = () => {
-  return JSON.parse(localStorage.getItem('products') || '[]');
+  try {
+      const products = JSON.parse(localStorage.getItem('products') || '[]');
+      return Array.isArray(products) ? products : [];
+  } catch (e) {
+      console.error('Error parsing products from localStorage:', e);
+      return [];
+  }
 };
+
 
 const getProductById = (productId) => {
   const products = getProducts();
@@ -90,6 +108,7 @@ const addToCart = (customerId, productId, quantity) => {
   }
 
   carts[customerId] = cart;
+  console.log(carts);
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
@@ -110,7 +129,7 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
     const product = products.find(p => p.id === item.productId);
     if (product) {
       orderTotal += product.price * item.quantity;
-      product.stock -= item.quantity;
+      product.stock -= item.quantity; 
     }
   });
 
@@ -172,6 +191,7 @@ export {
   getSellerProducts,
   getSellerOrders
 };
+
 
 $(document).ready(() => {
   initializeData().then(() => {

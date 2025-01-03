@@ -4,36 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Listing</title>
+    <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet">
+    <!-- <link href="../styles/style.css" rel="stylesheet" /> -->
     <script src="../scripts/jq-3-7-1.js"></script>
     <script src="../scripts/productLogic.js" type="module"></script>
 </head>
 <body>
-    <h1>Product Listing</h1>
-    <div id="product-list"></div>
+    <div class="container my-5">
+        <div id="product-list" class="row g-4"></div>
+    </div>
 
+   
     <script type="module">
-        import { getProducts, addToCart } from '../scripts/productLogic.js';
+      import { initializeData, getProducts, addToCart } from '../scripts/productLogic.js';
 
-        $(document).ready(() => {
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    $(document).ready(() => {
+        const productType = getQueryParam('type'); // Retrieve query parameters ex: ?type=laptop
+
+        initializeData().then(() => {
             const products = getProducts();
-            const $productList = $('#product-list');
+            console.log('Loaded products:', products);
 
-            products.forEach(product => {
-                const $productDiv = $('<div>').addClass('product');
-                $productDiv.append($('<h2>').text(product.name));
-                $productDiv.append($('<p>').text(`Price: $${product.price.toFixed(2)}`));
-                $productDiv.append($('<p>').text(`Stock: ${product.stock}`));
-                
-                const $addToCartBtn = $('<button>').text('Add to Cart');
-                $addToCartBtn.on('click', () => {
-                    addToCart('customer123', product.id, 1);
-                    alert('Product added to cart!');
-                });
-                
-                $productDiv.append($addToCartBtn);
-                $productList.append($productDiv);
+            const $productList = $('#product-list');
+            if (!products || products.length === 0) {
+                $productList.append('<p class="text-center">No products available.</p>');
+                return;
+            }
+
+            const filteredProducts = productType
+                ? products.filter(product => product.type === productType)
+                : products;
+
+            if (filteredProducts.length === 0) {
+                $productList.append('<p class="text-center">No products match the selected type.</p>');
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const imagePath = `../images/${product.id}.png`;
+
+                const $productCard = $(`
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="${imagePath}" class="card-img-top" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150'">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text">Price: $${product.price.toFixed(2)}</p>
+                                <p class="card-text">Stock: ${product.stock}</p>
+                                <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                $productCard.find('.add-to-cart').on('click', () => {
+                  addToCart('customer123', product.id, 1);
+  
+                  const queryString = new URLSearchParams({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price.toFixed(2)
+                  }).toString();
+  
+                  window.location.href = `cart.html?${queryString}`;
+              });
+
+                $productList.append($productCard);
             });
+        }).catch(err => {
+            console.error('Initialization error:', err);
+            $('#product-list').append('<p class="text-center text-danger">Error loading products.</p>');
         });
+    });
+
     </script>
+
 </body>
 </html>

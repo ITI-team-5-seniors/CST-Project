@@ -9,8 +9,8 @@ $(function () {
     const email = $('#login-email').val();
     const password = $('#login-password').val();
 
-    $('#message').on('click', function () {
-      $(this).css({ display: 'none' });
+    $('body').on('click', function () {
+      $('#message').css({ display: 'none' });
     });
 
     authenticateUser(email, password);
