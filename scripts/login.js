@@ -3,17 +3,28 @@ function displayMessage(message) {
   $('#message').css({ display: 'block' });
 }
 $(function () {
+  const adminEmail ='admin@example.com';
+  const adminPassword = 'admin123';
   $('#login-form').on('submit', function (event) {
     event.preventDefault();
 
     const email = $('#login-email').val();
     const password = $('#login-password').val(); 
+    if (email==adminEmail&&password==adminPassword)
+    {
+      window.location.href='admindashboard.html';
+    }
+    else{
+      displayMessage('Incorrect Email or Passward.');
+    }
 
     $('body').on('click', function () {
       $('#message').css({ display: 'none' });
     });
 
     authenticateUser(email, password);
+  ('#login-email').val('');
+  ('#login-password').val('');
   });
 
   function authenticateUser(email, password) {

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="../scripts/jq-3-7-1.js"></script>
     <script src="../scripts/admindashboard.js"></script>
-<link rel="stylesheet" href="../styles/admindashboard.css">
+    <link rel="stylesheet" href="../styles/admindashboard.css">
 </head>
 <body>
 
@@ -18,16 +18,17 @@
         </div>
         <ul class="sidebar-menu">
             <li class="active">
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Seller</a>
+                <a href="#sellermanagement"><i class="fas fa-tachometer-alt"></i> Seller</a>
             </li>
             <li>
                 <a href="#"><i class="fas fa-shopping-cart"></i> Products</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-users"></i> Users</a>
+                <a href="#usermanagement"><i class="fas fa-users"></i> Users</a>
             </li>
         </ul>
     </div>
+
     <div class="main-content">  
         <div class="top-navbar">
             <button class="btn" id="menu-toggle">
@@ -52,7 +53,7 @@
             <div class="dashboard-card table-card">
                 <h5 class="mb-4">User Management </h5>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="usermanagement">
                         <thead>
                             <tr>
                                 <th>Customer ID</th>
@@ -61,13 +62,32 @@
                             </tr>
                         </thead>
                         <tbody id="user-table-body">
-                        
+                            <!-- User data will be displayed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-card table-card" id="sellermanagement">
+                <h5 class="mb-4">Seller Management </h5>
+                <div class="table-responsive">
+                    <table class="table" id="sellermanagement-table">
+                        <thead>
+                            <tr>
+                                <th>Seller ID</th>
+                                <th>Seller</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seller-table-body">
+                            <!-- Seller data will be displayed here -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
     </div>
- 
+
 </body>
 </html>
