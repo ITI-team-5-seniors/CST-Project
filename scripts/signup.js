@@ -2,6 +2,7 @@ function displayMessage(message) {
   $('#message').text(message);
   $('#message').css({ display: 'block' });
 }
+
 const key = CryptoJS.lib.WordArray.random(32).toString();
 
 $(function () {
@@ -18,7 +19,18 @@ $(function () {
     });
 
     if (validateForm(username, email, password, role)) {
-      addUser(username, email, password, role);
+      if (role === 'admin') {
+        // Admin will be added only via login, not sign-up
+        displayMessage('Admin role cannot be added via sign-up.');
+      } else if (role === 'seller') {
+        addSeller(username, email, password, role); // Seller
+      } else {
+        addUser(username, email, password, role); // Regular user
+        $('#username').val('');
+        $('#email').val('');
+        $('#password').val('');
+        $('#role').val('');
+      }
     }
   });
 
@@ -29,13 +41,11 @@ $(function () {
     const passwordMinLength = 6;
 
     if (!usernameRegex.test(username)) {
-      displayMessage(
-        'Username must contain at least 3 alphabets, ("_" , "-") are allowed.'
-      );
+      displayMessage('Username must contain at least 3 alphabets, ("_" , "-") are allowed.');
       return false;
     }
     if (!emailRegex.test(email)) {
-      displayMessage('emai is not valid');
+      displayMessage('Email is not valid.');
       return false;
     }
 
@@ -54,15 +64,39 @@ $(function () {
     if (userExists) {
       displayMessage('Username already exists. Please choose another one.');
     } else if (emailExists) {
-      displayMessage('email already exists. Please choose another one.');
+      displayMessage('Email already exists. Please choose another one.');
     } else {
-      // password encryption
+      // Encrypt password
       const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
 
       const newUser = { username, email, encryptedPassword, role };
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
       displayMessage('User added successfully!');
+    }
+  }
+
+  function addSeller(username, email, password, role) {
+    const sellers = JSON.parse(localStorage.getItem('sellers')) || [];
+    const sellerExists = sellers.some((seller) => seller.username === username);
+    const emailExists = sellers.some((seller) => seller.email === email);
+
+    if (sellerExists) {
+      displayMessage('Username already exists. Please choose another one.');
+    } else if (emailExists) {
+      displayMessage('Email already exists. Please choose another one.');
+    } else {
+      // Encrypt password
+      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+
+      const newSeller = { username, email, encryptedPassword, role };
+      sellers.push(newSeller);
+      $('#username').val('');
+      $('#email').val('');
+      $('#password').val('');
+      $('#role').val('');
+      localStorage.setItem('sellers', JSON.stringify(sellers));
+      displayMessage('Seller added successfully!');
     }
   }
 });
