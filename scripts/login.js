@@ -30,7 +30,7 @@ $(function () {
   function authenticateUser(email, password) {
     const users = JSON.parse(localStorage.getItem('users'));
 
-    users.some((user) => {
+    const userFound=users.some((user) => {
 
       const bytes = CryptoJS.AES.decrypt(user.encryptedPassword, key);
       const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
@@ -46,10 +46,29 @@ $(function () {
         } else window.location = 'customer.html';
         // Show customer-specific content
         return true;
-      } else {
-        displayMessage('incorrect email or password');
-        return false;
-      }
+
+      } 
+      return false;
     });
+    if (!userFound)
+    {
+      displayMessage('incorrect email or password ');
+      setTimeout(()=>{
+        let reset = confirm("Do you want to Rest password?");
+        if(reset)
+        {
+          sentRestRequesttoadmin(email);
+        }
+      },500);
+    }
+  }
+  function   sentRestRequesttoadmin(email){
+    const requestpass= JSON.parse(localStorage.getItem('requestpass')) || [];
+    const requestId = requestpass.length + 1;
+    const requestTime = new Date().toLocaleString();
+    const newRequest = { id: requestId, email:email, time: requestTime };
+    requestpass.push(newRequest);
+    localStorage.setItem("requestpass",JSON.stringify(requestpass));
+    alert ('Reset password Request is sent to admin ');
   }
 });
