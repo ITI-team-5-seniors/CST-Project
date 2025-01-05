@@ -47,13 +47,21 @@
     margin-right: 10px;
     width: 20px;
 }
+.sidebar.collapsed{
+   width: 0;
+   overflow: hidden;
+}
 
 /* Main content styles */
 .main-content {
     margin-left: var(--sidebar-width);
     padding: 20px;
+    transition: all 0.3s ease;
 }
 
+.main-content.collapsed {
+    margin-left: 0;
+}
 /* Top navbar styles */
 .top-navbar {
     height: var(--topbar-height);
