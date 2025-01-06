@@ -82,7 +82,9 @@
                     });
 
                     $productCard.find('.add-to-cart').on('click', () => {
-                        addToCart('customer123', product.id, 1);
+                        let currentUser = JSON.parse(localStorage.getItem('currentUser'))
+                        console.log(currentUser['username'])
+                        addToCart(currentUser['username'], product.id, 1);
 
                         //const queryString = new URLSearchParams({
                        //     id: product.id,
