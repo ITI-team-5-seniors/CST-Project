@@ -84,13 +84,13 @@
                     $productCard.find('.add-to-cart').on('click', () => {
                         addToCart('customer123', product.id, 1);
 
-                        const queryString = new URLSearchParams({
-                            id: product.id,
-                            name: product.name,
-                            price: product.price.toFixed(2)
-                        }).toString();
+                        //const queryString = new URLSearchParams({
+                       //     id: product.id,
+                       //     name: product.name,
+                        //    price: product.price.toFixed(2)
+                        //}).toString();
 
-                        window.location.href = `cart.html?${queryString}`;
+                       // window.location.href = `cart.html?${queryString}`;
                     });
 
                     $productList.append($productCard);
