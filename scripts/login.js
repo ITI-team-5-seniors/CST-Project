@@ -23,8 +23,14 @@ $(function () {
       $('#message').css({ display: 'none' });
     });
 
+<<<<<<< HEAD
     $('#login-email').val('');
     $('#login-password').val('');
+=======
+    authenticateUser(email, password);
+  $('#login-email').val('');
+  $('#login-password').val('');
+>>>>>>> 01fa6790a6529beb20353569c957f7cc2db71e28
   });
 
   function authenticateUser(email, password) {
@@ -52,8 +58,27 @@ $(function () {
           window.location = 'admindashboard.html';
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
+<<<<<<< HEAD
         } else {
           window.location = 'customer.html';
+=======
+          // Show seller-specific content
+        } else window.location = 'Product_Listing.html';
+        // Show customer-specific content
+        return true;
+
+      } 
+      return false;
+    });
+    if (!userFound)
+    {
+      displayMessage('incorrect email or password ');
+      setTimeout(()=>{
+        let reset = confirm("Do you want to Rest password?");
+        if(reset)
+        {
+          sentRestRequesttoadmin(email);
+>>>>>>> 01fa6790a6529beb20353569c957f7cc2db71e28
         }
         return;
       }
@@ -67,9 +92,14 @@ $(function () {
       }
     }, 500);
   }
+<<<<<<< HEAD
 
   function sendResetRequestToAdmin(email) {
     const requestpass = JSON.parse(localStorage.getItem('requestpass')) || [];
+=======
+  function sentRestRequesttoadmin(email){
+    const requestpass= JSON.parse(localStorage.getItem('requestpass')) || [];
+>>>>>>> 01fa6790a6529beb20353569c957f7cc2db71e28
     const requestId = requestpass.length + 1;
     const requestTime = new Date().toLocaleString();
     const newRequest = { id: requestId, email: email, time: requestTime };

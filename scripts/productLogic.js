@@ -7,62 +7,65 @@ const fetchAndStoreProducts = () => {
   return $.ajax({
     url: API_URL,
     method: 'GET',
-    dataType: 'json'
-  }).then((response) => {
-    const products = response.products || [];
-    localStorage.setItem('products', JSON.stringify(products));
-    return products;
-  }).catch((error) => {
-    console.error('Error fetching products:', error);
-    return [];
-  });
+    dataType: 'json',
+  })
+    .then((response) => {
+      const products = response.products || [];
+      localStorage.setItem('products', JSON.stringify(products));
+      return products;
+    })
+    .catch((error) => {
+      console.error('Error fetching products:', error);
+      return [];
+    });
 };
 
-fetchAndStoreProducts().then((products) => {
-  console.log('Fetched products:', products);
-}).catch((error) => {
-  console.error('Error fetching products:', error);
-});
-
+fetchAndStoreProducts()
+  .then((products) => {
+    console.log('Fetched products:', products);
+  })
+  .catch((error) => {
+    console.error('Error fetching products:', error);
+  });
 
 // Initialize data in local storage
 const initializeData = () => {
   const initPromises = [];
 
   if (!localStorage.getItem('products')) {
-      console.log('Fetching products for initialization...');
-      initPromises.push(fetchAndStoreProducts());
+    console.log('Fetching products for initialization...');
+    initPromises.push(fetchAndStoreProducts());
   }
-  if (!localStorage.getItem('carts')) {
-      localStorage.setItem('carts', JSON.stringify({}));
-  }
+  // if (!localStorage.getItem('carts')) {
+  //     localStorage.setItem('carts', JSON.stringify({}));
+  // }
   if (!localStorage.getItem('orders')) {
-      localStorage.setItem('orders', JSON.stringify([]));
+    localStorage.setItem('orders', JSON.stringify([]));
   }
 
-  return $.when(...initPromises).done(() => {
+  return $.when(...initPromises)
+    .done(() => {
       console.log('Data initialized.');
-  }).fail((error) => {
+    })
+    .fail((error) => {
       console.error('Initialization failed:', error);
-  });
+    });
 };
-
 
 // Product related functions
 const getProducts = () => {
   try {
-      const products = JSON.parse(localStorage.getItem('products') || '[]');
-      return Array.isArray(products) ? products : [];
+    const products = JSON.parse(localStorage.getItem('products') || '[]');
+    return Array.isArray(products) ? products : [];
   } catch (e) {
-      console.error('Error parsing products from localStorage:', e);
-      return [];
+    console.error('Error parsing products from localStorage:', e);
+    return [];
   }
 };
 
-
 const getProductById = (productId) => {
   const products = getProducts();
-  return products.find(product => product.id === productId);
+  return products.find((product) => product.id === productId);
 };
 
 const addProduct = (product) => {
@@ -75,7 +78,7 @@ const addProduct = (product) => {
 
 const updateProduct = (productId, updatedFields) => {
   const products = getProducts();
-  const index = products.findIndex(product => product.id === productId);
+  const index = products.findIndex((product) => product.id === productId);
   if (index !== -1) {
     products[index] = { ...products[index], ...updatedFields };
     localStorage.setItem('products', JSON.stringify(products));
@@ -86,7 +89,9 @@ const updateProduct = (productId, updatedFields) => {
 
 const deleteProduct = (productId) => {
   const products = getProducts();
-  const updatedProducts = products.filter(product => product.id !== productId);
+  const updatedProducts = products.filter(
+    (product) => product.id !== productId
+  );
   localStorage.setItem('products', JSON.stringify(updatedProducts));
 };
 
@@ -96,26 +101,26 @@ const getCart = (customerId) => {
   return carts[customerId] || [];
 };
 
-const addToCart = (customerId, productId, quantity) => {
-  const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  const cart = carts[customerId] || [];
-  const existingItem = cart.find(item => item.productId === productId);
+const addToCart = (username, productId, quantity) => {
+  const carts = JSON.parse(localStorage.getItem('carts') || {});
+
+  const existingItem = carts[username].find(
+    (item) => item.productId === productId
+  );
 
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ productId, quantity });
+    carts[username].push({ productId, quantity });
   }
 
-  carts[customerId] = cart;
-  console.log(carts);
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
 const removeFromCart = (customerId, productId) => {
   const carts = JSON.parse(localStorage.getItem('carts') || '{}');
   const cart = carts[customerId] || [];
-  carts[customerId] = cart.filter(item => item.productId !== productId);
+  carts[customerId] = cart.filter((item) => item.productId !== productId);
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
@@ -125,11 +130,11 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
   let orderTotal = 0;
 
   // Calculate total and update stock
-  cart.forEach(item => {
-    const product = products.find(p => p.id === item.productId);
+  cart.forEach((item) => {
+    const product = products.find((p) => p.id === item.productId);
     if (product) {
       orderTotal += product.price * item.quantity;
-      product.stock -= item.quantity; 
+      product.stock -= item.quantity;
     }
   });
 
@@ -142,7 +147,7 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
     shippingDetails,
     paymentDetails,
     status: 'Processing',
-    date: new Date().toISOString()
+    date: new Date().toISOString(),
   };
 
   // Update orders
@@ -164,13 +169,13 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
 // Seller related functions
 const getSellerProducts = (sellerId) => {
   const products = getProducts();
-  return products.filter(product => product.sellerId === sellerId);
+  return products.filter((product) => product.sellerId === sellerId);
 };
 
 const getSellerOrders = (sellerId) => {
   const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-  return orders.filter(order => 
-    order.items.some(item => {
+  return orders.filter((order) =>
+    order.items.some((item) => {
       const product = getProductById(item.productId);
       return product && product.sellerId === sellerId;
     })
@@ -189,9 +194,8 @@ export {
   removeFromCart,
   checkout,
   getSellerProducts,
-  getSellerOrders
+  getSellerOrders,
 };
-
 
 $(document).ready(() => {
   initializeData().then(() => {

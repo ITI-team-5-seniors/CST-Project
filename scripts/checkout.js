@@ -1,6 +1,7 @@
 $(function () {
   params = new URLSearchParams(location.search);
   amount = parseFloat(params.get('amount'));
+  if(isNaN(amount))amount=0
   $('span:eq(0)').text(amount);
   $('span:eq(1)').text(amount/10);
   $('span:eq(3)').text((amount*1.1+10).toFixed(2));
@@ -22,6 +23,7 @@ $(function () {
 
   $('form').on('submit', function (e) {
     e.preventDefault();
+    if(amount=0)displayMessage('please check your cart before checkout')
     expiry = new Date($('#exp-date').val());
     currentDate = new Date();
     if ($('#card-number').val().length<12){
