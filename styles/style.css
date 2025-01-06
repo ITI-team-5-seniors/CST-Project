@@ -126,7 +126,7 @@ h2{
     
 }
 .card {
-    height: 250px; 
+    height: 400px; 
     overflow: hidden; 
 }
 
@@ -137,11 +137,20 @@ h2{
 }
 
 .card-body {
-    max-height: 100px; 
+    max-height: 200px; 
     overflow: hidden; 
 }
 .card-title{
     white-space: nowrap;
+}
+.btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s;
+    margin-top: auto;
 }
 /* portait */
 @media (min-width: 768px) and (max-width:1000px) {
