@@ -3,9 +3,9 @@ function displayMessage(message) {
   $('#message').css({ display: 'block' });
 }
 
-const key = CryptoJS.lib.WordArray.random(32).toString();
+const key = '9cba27daf3423af3a61496c45b4025692ac7e719036b7108bfc94e08fbfda51e' //CryptoJS.lib.WordArray.random(32).toString();
 
-$(function () {
+$(function () { 
   $('#signup-form').on('submit', function (event) {
     event.preventDefault();
 
@@ -67,17 +67,12 @@ $(function () {
     } else if (emailExists) {
       displayMessage('Email already exists. Please choose another one.');
     } else {
-      // Encrypt password
-      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+      const encryptedPassword = CryptoJS.AES.encrypt(password,key).toString();
 
       const newUser = { username, email, encryptedPassword, role };
       users.push(newUser);
       if(role=='customer'){
         carts[username]=[]
-        // const newCart = {[username]:[]};
-        // newCart[username]=[]
-        // carts.push(newCart);
-        console.log(carts)
       }
       localStorage.setItem('carts', JSON.stringify(carts));
       localStorage.setItem('users', JSON.stringify(users));
@@ -96,7 +91,7 @@ $(function () {
       displayMessage('Email already exists. Please choose another one.');
     } else {
       // Encrypt password
-      const encryptedPassword = CryptoJS.AES.encrypt(JSON.stringify(password), key).toString();
+      const encryptedPassword = CryptoJS.AES.encrypt(password,key ).toString();
 
       const newSeller = { username, email, encryptedPassword, role };
       sellers.push(newSeller);
