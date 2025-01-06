@@ -35,7 +35,7 @@
 }
 
 .sidebar-menu li:hover {
-    background-color: var(--secondary-color);
+    background-color: var(secondary-color);
 }
 
 .sidebar-menu a {
