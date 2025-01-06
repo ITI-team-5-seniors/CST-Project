@@ -21,11 +21,11 @@
       class="main-wrapper d-flex flex-column align-items-center flex-sm-row my-3 mx-auto col-sm-11 col-md-10 col-lg-9 col-xl-8 col-xl-6 text-center"
     >
       <div
-        class="cart col-10 col-sm-8 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-2"
+        class="cart col-10 col-sm-9 p-1 p-sm-2 bg-gradient bg-dark bg-opacity-50 rounded-2"
       >
         <h3 class="text-info mt-2">Shopping Cart</h3>
-        <div class="container mt-3">
-          <div
+        <div class="container mt-3" id="product-list">
+          <!-- <div
             class="item p-3 d-flex justify-content-center align-items-center"
             id="1"
           >
@@ -34,10 +34,7 @@
               src="../Photos/iphone 15.jpg"
               alt=""
             />
-            <div class="col-3 mx-2">
-              <h6>iphone 256GB, Grey</h6>
-              <h6></h6>
-            </div>
+            <h6 class="item-name col-3 mx-2">iphone 256GB, Grey</h6>
             <div class="controls col-3 d-sm-flex justify-content-center">
               <input
                 class="bg-info border-0 rounded"
@@ -54,7 +51,9 @@
               />
             </div>
             <h6 class="col-2 item-price">100$</h6>
-            <i class="col-1 m-2 bi bi-trash3-fill pointer-event"></i>
+            <i
+              class="delete-icon col-1 m-2 bi bi-trash3-fill pointer-event"
+            ></i>
           </div>
           <hr class="bg-black" />
           <div
@@ -66,9 +65,7 @@
               src="../images/8.png"
               alt=""
             />
-            <div class="col-3 mx-2">
-              <h6>Samsung S24 ultra, 1TB, Black</h6>
-            </div>
+              <h6 class="item-name col-3 mx-2">Samsung S24 ultra, 1TB, Black</h6>
             <div class="controls col-3 d-sm-flex justify-content-center">
               <input
                 class="bg-info border-0 rounded"
@@ -85,20 +82,20 @@
               />
             </div>
             <h6 class="col-2 item-price">200$</h6>
-            <i class="col-1 m-2 bi bi-trash3-fill pointer-event"></i>
+            <i
+              class="delete-icon col-1 m-2 bi bi-trash3-fill pointer-event"
+            ></i> 
           </div>
-          <hr />
+          <hr />-->
         </div>
-        <a class="icon-link mb-3" href="#">
+        <a id="go-shopping" class="icon-link mb-3" href="#">
           <span>&#8592;</span> Go shopping
         </a>
       </div>
       <div
-        class="summary col-10 col-sm-4 align-self-sm-stretch d-flex flex-column justify-content-center align-items-center p-3 bg-info bg-gradient bg-opacity-50 px-4 p-sm-2 rounded-2 shadow-lg"
+        class="summary col-10 col-sm-3 align-self-sm-stretch d-flex flex-column justify-content-center align-items-center p-3 bg-info bg-gradient bg-opacity-50 px-4 p-sm-2 rounded-2 shadow-lg"
       >
-        <div class="subtotal">
-
-        </div>
+        <div class="subtotal"></div>
         <h3 class="text-dark mt-3 fw-bolder">
           Total : <span class="fw-bolder" id="total"> </span>
         </h3>

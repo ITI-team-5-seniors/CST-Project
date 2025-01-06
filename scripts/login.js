@@ -23,8 +23,8 @@ $(function () {
     });
 
     authenticateUser(email, password);
-  ('#login-email').val('');
-  ('#login-password').val('');
+  $('#login-email').val('');
+  $('#login-password').val('');
   });
 
   function authenticateUser(email, password) {
@@ -43,7 +43,7 @@ $(function () {
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
           // Show seller-specific content
-        } else window.location = 'customer.html';
+        } else window.location = 'Product_Listing.html';
         // Show customer-specific content
         return true;
 
@@ -62,7 +62,7 @@ $(function () {
       },500);
     }
   }
-  function   sentRestRequesttoadmin(email){
+  function sentRestRequesttoadmin(email){
     const requestpass= JSON.parse(localStorage.getItem('requestpass')) || [];
     const requestId = requestpass.length + 1;
     const requestTime = new Date().toLocaleString();

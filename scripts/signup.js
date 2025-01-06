@@ -58,6 +58,7 @@ $(function () {
 
   function addUser(username, email, password, role) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
+    const carts = JSON.parse(localStorage.getItem('carts')) || {};
     const userExists = users.some((user) => user.username === username);
     const emailExists = users.some((user) => user.email === email);
 
@@ -71,6 +72,14 @@ $(function () {
 
       const newUser = { username, email, encryptedPassword, role };
       users.push(newUser);
+      if(role=='customer'){
+        carts[username]=[]
+        // const newCart = {[username]:[]};
+        // newCart[username]=[]
+        // carts.push(newCart);
+        console.log(carts)
+      }
+      localStorage.setItem('carts', JSON.stringify(carts));
       localStorage.setItem('users', JSON.stringify(users));
       displayMessage('User added successfully!');
     }
@@ -87,7 +96,7 @@ $(function () {
       displayMessage('Email already exists. Please choose another one.');
     } else {
       // Encrypt password
-      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+      const encryptedPassword = CryptoJS.AES.encrypt(JSON.stringify(password), key).toString();
 
       const newSeller = { username, email, encryptedPassword, role };
       sellers.push(newSeller);
