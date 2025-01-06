@@ -63,7 +63,7 @@ label {
   padding: 3px;
   font-size: calc(1vw + 0.5rem);
 }
-#checkout-btn:hover {
+#checkout-btn:hover, #checkout-btn:disabled {
   background-color: #637e84;
   color: white;
   transition: 1s;

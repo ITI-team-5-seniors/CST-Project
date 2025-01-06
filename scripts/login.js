@@ -1,3 +1,4 @@
+// import { key } from "./signup";
 function displayMessage(message) {
   $('#message').text(message);
   $('#message').css({ display: 'block' });
@@ -19,11 +20,19 @@ $(function () {
     }
     $('#login-email').val('');
     $('#login-password').val('');
+    const password = $('#login-password').val();
+    if (email == adminEmail && password == adminPassword) {
+      window.location.href = 'admindashboard.html';
+    } 
 
     $('body').on('click', function () {
       $('#message').css({ display: 'none' });
     });
 
+    authenticateUser(email, password);
+    $('#login-email').val('');
+    $('#login-password').val('');
+  });
 
   function authenticateUser(email, password) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -38,14 +47,18 @@ $(function () {
         window.location.href = 'reset-password.html';
         return;
       }
+    const users = JSON.parse(localStorage.getItem('users'));
+    const userFound = users.some((user) => {
 
       const bytes = CryptoJS.AES.decrypt(user.encryptedPassword, key);
       const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
 
       if (decryptedPassword === password) {
+      if (user.email == email , password== decryptedPassword ) {//&& decryptedPassword == password
         localStorage.setItem('currentUser', JSON.stringify(user));
         const userRole = user.role;
 
+        const userRole = user.role;
         if (userRole === 'admin') {
           window.location = 'admindashboard.html';
         } else if (userRole === 'seller') {
@@ -53,20 +66,19 @@ $(function () {
         } else {
           window.location = 'customer.html';
           // Show seller-specific content
-        } else window.location = 'Product_Listing.html';
+        }
+         else window.location = 'Product_Listing.html';
         // Show customer-specific content
         return true;
-
-      } 
-      return false;
+      }
+      return false
     });
-    if (!userFound)
-    {
+   
+    if (!userFound) {
       displayMessage('incorrect email or password ');
-      setTimeout(()=>{
-        let reset = confirm("Do you want to Rest password?");
-        if(reset)
-        {
+      setTimeout(() => {
+        let reset = confirm('Do you want to Rest password?');
+        if (reset) {
           sentRestRequesttoadmin(email);
         }
         return;

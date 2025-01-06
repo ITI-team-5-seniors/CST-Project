@@ -13,9 +13,16 @@ function calculateTotal() {
     subtotal = $('<h4>').text(`subtotal ${index + 1} : ${total}$ `);
     subtotal.appendTo($('.subtotal'));
   });
-  subtotal.append($('<hr>'));
-  total = eval(subtotals.join('+'));
+  $('.subtotal').append($('<hr>'));
+  if (subtotals.length > 0) {
+    total = eval(subtotals.join('+'));
+  } else total = 0;
+  
   $('#total').text(total + '$');
+  
+  if (total == 0) {
+    $('#checkout-btn').attr('disabled', 'true');
+  }
 }
 function drawProductItem() {
   currentUserName = JSON.parse(localStorage.getItem('currentUser'))['username'];
@@ -67,7 +74,7 @@ function drawProductItem() {
 $(function () {
   drawProductItem();
   calculateTotal();
-  
+
   $(`.item #increment`).each(function () {
     $(this).on('click', function (e) {
       id = $(this).parent().parent()[0].id;
