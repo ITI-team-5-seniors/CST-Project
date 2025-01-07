@@ -1,16 +1,14 @@
-// import { key } from "./signup";
 function displayMessage(message) {
   $('#message').text(message);
   $('#message').css({ display: 'block' });
 }
+
 $(function () {
-
-
   const adminEmail = 'admin@example.com';
   const adminPassword = 'admin123';
-  
 
   const POLLING_INTERVAL = 2000; // Refresh every 2 seconds for approval from admin to solve the lag between user and admin page
+
   // Polling for reset approval from admin
   function startPollingForResetapproval(email) {
     console.log("Polling started for email:", email);
@@ -33,86 +31,76 @@ $(function () {
   $('#login-form').on('submit', function (event) {
     event.preventDefault();
 
-    const email = $('#login-email').val();
-    const password = $('#login-password').val();
-    if (email == adminEmail && password == adminPassword) {
+    const email = $('#login-email').val().trim(); // Trim spaces
+    const password = $('#login-password').val().trim(); // Trim spaces
+
+    if (email === adminEmail && password === adminPassword) {
       window.location.href = 'admindashboard.html';
-    } 
+    } else {
+      authenticateUser(email, password);
+    }
 
-    $('body').on('click', function () {
-      $('#message').css({ display: 'none' });
-    });
-
-    authenticateUser(email, password);
-    $('#login-email').val('');
-    $('#login-password').val('');
+    $('#login-email').val(''); // Reset input after authentication attempt
+    $('#login-password').val(''); // Reset input after authentication attempt
   });
 
   function authenticateUser(email, password) {
-    const users = JSON.parse(localStorage.getItem('users'));
-    const userFound = users.some((user) => {
-      user.resetApproved = user.resetApproved !== undefined ? user.resetApproved : false;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    console.log("Users in localStorage:", users);
 
+    const userFound = users.some((user) => {
       const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
       const bytes = CryptoJS.AES.decrypt(user.encryptedPassword, key);
       const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-      
-      if (user.email == email && password== decryptedPassword ) {//&& decryptedPassword == password
+
+      if (user.email.toLowerCase() === email.toLowerCase() && decryptedPassword === password) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         const userRole = user.role;
         if (userRole === 'admin') {
           window.location = 'admindashboard.html';
-          // Show admin-specific content
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
-          // Show seller-specific content
-        } else window.location = 'Product_Listing.html';
-        // Show customer-specific content
+        } else {
+          window.location = 'Product_Listing.html';
+        }
         return true;
       }
-      return false
+      return false;
     });
-   
+
     if (!userFound) {
-      displayMessage('incorrect email or password ');
+      displayMessage('Incorrect email or password.');
       setTimeout(() => {
-        let reset = confirm('Do you want to Rest password?');
+        let reset = confirm('Do you want to reset your password?');
         if (reset) {
-          if (emailExists(email))
-          {
-          sentRestRequesttoadmin(email);
-          }
-          else{
-            alert("Email does not exist in the system .");
-            $('login-email').val('');
-            $('login-password').val('');
+          if (emailExists(email)) {
+            sentRestRequesttoadmin(email);
+          } else {
+            alert("Email does not exist in the system.");
           }
         }
       }, 500);
-    }}
-    function emailExists(email) {
-      const users = JSON.parse(localStorage.getItem('users'))||[];
-      return users.some(user=>user.email==email);
-      
     }
-    
+  }
+
+  function emailExists(email) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    return users.some(user => user.email.toLowerCase() === email.toLowerCase());
+  }
+
   function sentRestRequesttoadmin(email) {
     const requestpass = JSON.parse(localStorage.getItem('requestpass')) || [];
-    const existingRequest = requestpass.find(request=>request.email==email);
-    if (existingRequest)
-    {
-      alert('You Are Already have a pending reset request');
-      return ;
+    const existingRequest = requestpass.find(request => request.email === email);
+    if (existingRequest) {
+      alert('You already have a pending reset request.');
+      return;
     }
     const requestId = requestpass.length + 1;
     const requestTime = new Date().toLocaleString();
     const newRequest = { id: requestId, email: email, time: requestTime };
     requestpass.push(newRequest);
     localStorage.setItem('requestpass', JSON.stringify(requestpass));
-    alert('Reset password Request is sent to admin ');
+    alert('Reset password request has been sent to admin.');
     startPollingForResetapproval(email);
-
   }
-
-
 });

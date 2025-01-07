@@ -23,7 +23,7 @@ $(function() {
             isValid = false;
         } else if (!passwordRegex.test(newpass)) {
             newpasserror.textContent = 'Password must be at least 8 characters, include a mix of upper and lower case letters, numbers, and special characters.';
-            newpasserror.style.display = 'block';
+            // newpasserror.style.display = 'block';
             isValid = false;
         } else {
             document.getElementById('conpass').disabled = false;
@@ -32,7 +32,7 @@ $(function() {
         // Check password confirmation
         if (newpass !== confpass) {
             conpasserror.textContent = 'Passwords do not match.';
-            conpasserror.style.display = 'block';
+            // conpasserror.style.display = 'block';
             isValid = false;
         }
 
@@ -42,13 +42,7 @@ $(function() {
             if (currentUser) {
                 const key = CryptoJS.SHA256(currentUser.email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
                 const users = JSON.parse(localStorage.getItem('users')) || [];
-
-               //for check onlyyyyyyyy
-                console.log('Updated Users Array:', users);
-                console.log('Updated LocalStorage:', localStorage.getItem('users'));
-                console.log('Encryption Key:', key);
-
-                // Update the user password
+                console.log('Before password update:', users); 
                 const userIndex = users.findIndex(user => user.email === currentUser.email);
                 const encryptedNewPassword = CryptoJS.AES.encrypt(newpass, key).toString();
 
@@ -56,6 +50,8 @@ $(function() {
                     // Update the password
                     users[userIndex].encryptedPassword = encryptedNewPassword;
                     users[userIndex].resetApproved=false ;   // after reset password resetApproved reset to default value
+                    console.log("Updated Users:", users);  // Log updated users here
+
                     localStorage.setItem('users', JSON.stringify(users));
                     alert('Password successfully reset!');
                     window.location = 'login.html'; // Redirect to login page after reset
