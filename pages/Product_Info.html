@@ -28,10 +28,35 @@
       .img-thumbnail {
         cursor: pointer;
       }
+      #success,
+      #warning, #danger {
+        display: none;
+        margin: 0;
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%);
+        width: 500px;
+        z-index: 2;
+        text-align: center;
+      }
+
     </style>
   </head>
   <body>
     <div class="container mt-5">
+        <div class="alert alert-warning" id="warning" role="alert">
+            Please login to use the cart
+            <a href="login.html" class="alert-link">Login</a>
+          </div>
+          <div class="alert alert-success" id="success" role="alert">
+            Product added successfuly
+            <a href="cart.html" class="alert-link">Go to cart</a>
+          </div>
+          <div class="alert alert-danger" id="danger" role="alert">
+            Product out of stock
+          </div>
+    
       <div id="product-details" class="row"></div>
     </div>
 
@@ -98,11 +123,11 @@
 
           // Add event listener to the "Buy Now" button
           $('#buy-now').on('click', () => {
-            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser) {
+            // let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            // if (currentUser) {
               let quantity = parseInt($('#quantity').val());
-              addToCart(currentUser['username'], product.id, quantity);
-            } else alert('please login to use the cart');
+              addToCart( product.id, quantity);
+            // } else alert('please login to use the cart');
           });
         } else {
           // Display a message if the product is not found

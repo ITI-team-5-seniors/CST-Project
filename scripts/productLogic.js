@@ -96,25 +96,51 @@ const deleteProduct = (productId) => {
 };
 
 // Customer related functions
-const getCart = (customerId) => {
+const getCart = (customerName) => {
   const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  return carts[customerId] || [];
+  return carts[customerName] || [];
 };
 
-const addToCart = (username, productId, quantity) => {
-  const carts = JSON.parse(localStorage.getItem('carts') || {});
+const addToCart = (productId, quantity) => {
+  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser) {
+    let currentUserName = currentUser['username'];
+    const carts = JSON.parse(localStorage.getItem('carts') || {});
+    const existingItem = carts[currentUserName].find(
+      (item) => item.productId === productId
+    );
+        const stockProduct = getProductById( productId);
 
-  const existingItem = carts[username].find(
-    (item) => item.productId === productId
-  );
-
-  if (existingItem) {
-    existingItem.quantity += quantity;
+    if (existingItem) {
+      if (existingItem.quantity + quantity > stockProduct.stock) {
+        $('#danger').css({ display: 'block' });
+        setTimeout(function () {
+          $('#danger').css({ display: 'none' });
+        }, 2000);
+      } else {
+        existingItem.quantity += quantity;
+      }
+    } else {
+      if (quantity > stockProduct.stock) {
+        $('#danger').css({ display: 'block' });
+        setTimeout(function () {
+          $('#danger').css({ display: 'none' });
+        }, 2000);
+      } else {
+        carts[currentUserName].push({ productId, quantity });
+      }
+    }
+    localStorage.setItem('carts', JSON.stringify(carts));
+    $('#success').css({ display: 'block' });
+    setTimeout(function () {
+      $('#success').css({ display: 'none' });
+    }, 2000);
   } else {
-    carts[username].push({ productId, quantity });
+    $('#warning').css({ display: 'block' });
+    setTimeout(function () {
+      $('#warning').css({ display: 'none' });
+    }, 2000);
   }
-
-  localStorage.setItem('carts', JSON.stringify(carts));
 };
 
 const removeFromCart = (customerId, productId) => {
@@ -124,8 +150,8 @@ const removeFromCart = (customerId, productId) => {
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
-const checkout = (customerId, shippingDetails, paymentDetails) => {
-  const cart = getCart(customerId);
+const checkout = (customerName ) => {//shippingDetails, paymentDetails
+  const cart = getCart(customerName);
   const products = getProducts();
   let orderTotal = 0;
 
@@ -141,11 +167,11 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
   // Create order
   const order = {
     id: generateId(),
-    customerId,
+    customerName,
     items: cart,
     total: orderTotal,
-    shippingDetails,
-    paymentDetails,
+    // shippingDetails,
+    // paymentDetails,
     status: 'Processing',
     date: new Date().toISOString(),
   };
@@ -157,7 +183,7 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
 
   // Clear cart
   const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  delete carts[customerId];
+  carts[customerName] = [];
   localStorage.setItem('carts', JSON.stringify(carts));
 
   // Update product stock
