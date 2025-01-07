@@ -136,7 +136,104 @@ $(function() {
         localStorage.setItem('sellers', JSON.stringify(sellers));
         displaySellers();
     });
-  
+    $(document).ready(function() {
+        // Function to load checkout orders and display in table and cards
+        function loadCheckoutOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const tableBody = $('#checkout-table-body');
+            const cardContainer = $('#checkout-cards');
+            
+            // Clear any existing rows and cards
+            tableBody.empty();
+            cardContainer.empty();
+    
+            // Loop through orders and create table rows and cards
+            orders.forEach((order, index) => {
+                // Create table row
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${order.user}</td>
+                        <td>$${order.amount}</td>
+                        <td>${new Date(order.date).toLocaleDateString()}</td>
+                        <td><mark>${order.status || 'PENDING'}</mark></td>
+                        <td><button class="btn btn-info" onclick="showOrderDetails(${index})">View Details</button></td>
+                    </tr>
+                `;
+                tableBody.append(row);
+
+                const cardDiv = `
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Order ${index + 1}</h5>
+                                <p><strong>User:</strong> ${order.user}</p>
+                                <p><strong>Total Price:</strong> $${order.amount}</p>
+                                <p><strong>Date:</strong> ${new Date(order.date).toLocaleDateString()}</p>
+                                <p><strong>Status:</strong> ${order.status || 'PENDING'}</p>
+                                <button class="btn btn-info" onclick="showOrderDetails(${index})">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cardContainer.append(cardDiv);
+            });
+        }
+        window.showOrderDetails = function(index) {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const products = JSON.parse(localStorage.getItem('products')) || []; 
+            const order = orders[index];
+        
+            if (!order) return;
+            // bootstrap model content 
+            const modalContent = `
+                <h5>Order Details for ${index + 1}</h5>
+                <p><strong>User:</strong> ${order.user}</p>
+                <p><strong>Total Price:</strong> $${order.amount}</p>
+                <p><strong>Date:</strong> ${new Date(order.date).toLocaleDateString()}</p>
+                <p><strong>Status:</strong> ${order.status || 'PENDING'}</p>
+                <h6>Products:</h6>
+                <ul>
+                    ${order.products.map(product => {
+                        const productInfo = products.find(p => p.id === product.productId); 
+                        if (productInfo) {
+                          
+                            return `<li>${productInfo.name} (Quantity: ${product.quantity}, Price: $${productInfo.price})</li>`;
+                        } else {
+                            return `<li>Product not found (ID: ${product.productId})</li>`;
+                        }
+                    }).join('')}
+                </ul>
+            `;
+            
+            $('#modal-order-details').html(modalContent); 
+            const myModal = new bootstrap.Modal(document.getElementById('orderDetailsModal')); // Bootstrap modal
+            $('#orderDetailsModal').removeAttr('inert');
+
+            myModal.show(); 
+            document.querySelector('.modal-footer #updateStatusBtn').focus();
+            $('#updateStatusBtn').off('click').on('click', function() {
+                const newStatus = $('#orderStatus').val();
+                updateOrderStatus(index, newStatus);
+            });
+        };
+        function updateOrderStatus(index, newStatus) {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const order = orders[index];
+        
+            if (order) {
+                order.status = newStatus; 
+                localStorage.setItem('orders', JSON.stringify(orders)); 
+                loadCheckoutOrders(); 
+                alert(`Order ${index + 1} status updated to ${newStatus}`);
+            }
+        
+        } 
+
+        
+        loadCheckoutOrders();
+    });
+    
     displayUsers();
     displaySellers();
     loadfromrequests();
@@ -146,6 +243,7 @@ $(function() {
       sidebar.toggleClass('collapsed');
       mainContent.toggleClass('collapsed');
   });
+
     });
   
   

@@ -11,21 +11,73 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        #search {
+        /* #search {
             background-color: rgba(245, 245, 245, 0.833);
             width: 400px;
             border: none;
             outline: none;
             border-radius: 20px;
             padding: 8px 15px;
-        }
+        } */
 
-        #mainnav {
+        /* #mainnav {
             background-color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 30px;
-        }
+        } */
 
+        header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    position: fixed;
+    height: 50px;
+    padding: 10px 20px;
+    z-index:1000;
+}
+
+#logo img {
+    width: 100px;
+    margin-left: 10px;
+}
+
+.nav {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+
+.nav li a {
+    text-decoration: none;
+    color: black;
+}
+
+.nav li a:hover {
+    color: rgb(15, 72, 196)
+}
+
+
+
+#search input[type="search"] {
+    background-color: rgb(245, 245, 245);
+    width: 300px;
+    border: none;
+    outline: none;
+    padding: 8px;
+}
+
+#icons {
+    display: flex;
+    gap: 15px;
+   
+}
+
+.icon {
+    color: rgb(44, 43, 43);
+}
         .card {
             transition: transform 0.3s ease;
             border-radius: 10px;
@@ -37,6 +89,7 @@
         }
 
         .cards-container {
+          
             padding: 20px;
         }
 
@@ -90,7 +143,7 @@
             background-color: darkblue;
             color: white;
         }
-
+/* 
         .nav-link {
             color: black !important;
             margin-right: 10px;
@@ -106,7 +159,7 @@
 
         .icon:hover {
             color: blue;
-        }
+        } */
 
         @media (max-width: 768px) {
             #search {
@@ -137,50 +190,33 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainnav">
-
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-
-                <img src="../Photos/logo.png" alt="Brand Logo" style="width:60%; height: 40%; margin-right: 30px;">
-
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <input id="search" type="search" placeholder="What are you looking for?"/>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-cart-shopping icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa-regular fa-user icon"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+   
+    <header>
+        <div id="logo">
+            <img src="../Photos/logo.png" alt="logo">
         </div>
-    </nav>
+
+        <ul class="nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Product</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li id="login"><a href="#">login</a></li>
+        </ul>
+
+        <div id="search">
+            <input type="search" placeholder="    What are you looking for? " style="word-spacing:2px">
+        </div>
+
+        <div id="icons">
+            <a href="#"><i class="fa-solid fa-cart-shopping icon"></i></a>
+            <a href="#"><i class="fa-regular fa-user icon"></i></a>
+        </div>
+        <div id="menu-toggle" onclick="toggleMenu()">
+          <i class="fa fa-bars"></i>
+      </div>
+    </header>
+
 
     <div class="container-fluid cards-container">
         <div class="row g-4">
