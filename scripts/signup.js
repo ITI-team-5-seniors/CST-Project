@@ -3,7 +3,6 @@ function displayMessage(message) {
   $('#message').css({ display: 'block' });
 }
 
-const key = '9cba27daf3423af3a61496c45b4025692ac7e719036b7108bfc94e08fbfda51e' //CryptoJS.lib.WordArray.random(32).toString();
 
 $(function () { 
   $('#signup-form').on('submit', function (event) {
@@ -53,6 +52,14 @@ $(function () {
       displayMessage('Password must be at least 6 characters long.');
       return false;
     }
+    if (!role || role === '' || role === 'default') {
+      displayMessage('Please select a valid role.');
+      return false;
+    }
+    if (!username || !email || !password || !role) {
+      displayMessage('All fields are required.');
+      return;
+    }
     return true;
   }
 
@@ -67,8 +74,8 @@ $(function () {
     } else if (emailExists) {
       displayMessage('Email already exists. Please choose another one.');
     } else {
-      const encryptedPassword = CryptoJS.AES.encrypt(password,key).toString();
-
+      const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
+    const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
       const newUser = { username, email, encryptedPassword, role };
       users.push(newUser);
       if(role=='customer'){
@@ -91,14 +98,11 @@ $(function () {
       displayMessage('Email already exists. Please choose another one.');
     } else {
       // Encrypt password
-      const encryptedPassword = CryptoJS.AES.encrypt(password,key ).toString();
+      const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
+      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
 
       const newSeller = { username, email, encryptedPassword, role };
       sellers.push(newSeller);
-      $('#username').val('');
-      $('#email').val('');
-      $('#password').val('');
-      $('#role').val('');
       localStorage.setItem('sellers', JSON.stringify(sellers));
       displayMessage('Seller added successfully!');
     }
