@@ -1,6 +1,9 @@
 $(function () {
-  
-  function calculateTotal(){
+  $('body').on('click', function () {
+    $('#message').css({ display: 'none' });
+  });
+
+  function calculateTotal() {
     params = new URLSearchParams(location.search);
     amount = parseFloat(params.get('amount'));
     if (isNaN(amount)) {
@@ -9,13 +12,13 @@ $(function () {
     if (amount == 0) {
       $('#checkout-btn').attr('disabled', 'true');
     }
-  
+
     $('span:eq(0)').text(amount);
     $('span:eq(1)').text(amount / 10);
     $('span:eq(3)').text((amount * 1.1 + 10).toFixed(2));
   }
 
-  calculateTotal()
+  calculateTotal();
   $('img').on('click', function () {
     $('img').removeClass('checked');
     $(this).addClass('checked');
@@ -25,9 +28,6 @@ $(function () {
       e.preventDefault();
     }
   });
-  function displayMessage() {
-    $('#message').css({ display: 'flex', height: '200px' });
-  }
 
   $('form').on('submit', function (e) {
     e.preventDefault();
@@ -50,8 +50,7 @@ $(function () {
     } else if ($('#cvv').val().length < 3) {
       displayMessage('Card validation value must be 3 digits');
     } else {
-      displayMessage(
-      );
+      $('#message').css({ display: 'flex', height: '200px' });
       order = {
         user: currentUserName,
         products: cartProducts,
@@ -59,16 +58,21 @@ $(function () {
         date: orderDate,
       };
       orders.push(order);
+      allProducts = JSON.parse(localStorage.getItem('products'));
+      cartProducts.forEach((soldProduct) => {
+        let stockProduct = allProducts.find((product) => 
+          product.id == soldProduct['productId']
+        );
+        stockProduct.stock -= soldProduct['quantity'];
+        localStorage.setItem('products',JSON.stringify(allProducts))
+      });
+
       carts[currentUserName] = [];
       localStorage.setItem('carts', JSON.stringify(carts));
       localStorage.setItem('orders', JSON.stringify(orders));
-      params.set('amount',0)
+      params.set('amount', 0);
       history.replaceState(null, '', '?' + params.toString());
-      calculateTotal()
-
+      calculateTotal();
     }
-    $('body').on('click', function () {
-      $('#message').css({ display: 'none' });
-    });
   });
 });
