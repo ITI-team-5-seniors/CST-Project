@@ -1,6 +1,11 @@
 // script/utils.js
 
-const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
+let currentId = 60;
+
+const generateId = () => {
+    currentId++;
+    return `${currentId}`;
+};
 
 export const initializeData = () => {
     if (!localStorage.getItem('products')) {
@@ -11,6 +16,7 @@ export const initializeData = () => {
 export const getProducts = () => {
     return JSON.parse(localStorage.getItem('products') || '[]');
 };
+
 
 export const addProduct = (product) => {
     const products = getProducts();
@@ -30,6 +36,9 @@ export const updateProduct = (productId, updatedFields) => {
     }
     return null;
 };
+
+
+ 
 
 export const deleteProduct = (productId) => {
     const products = getProducts();
