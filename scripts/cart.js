@@ -17,25 +17,27 @@ function calculateTotal() {
   if (subtotals.length > 0) {
     total = eval(subtotals.join('+'));
   } else total = 0;
-  
+
   $('#total').text(total + '$');
-  
+
   if (total == 0) {
     $('#checkout-btn').attr('disabled', 'true');
   }
 }
 function drawProductItem() {
-  currentUserName = JSON.parse(localStorage.getItem('currentUser'))['username'];
-  carts = JSON.parse(localStorage.getItem('carts') || {});
-  cartProducts = carts[currentUserName];
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser) {
+    currentUserName = currentUser['username'];
+    carts = JSON.parse(localStorage.getItem('carts') || {});
+    cartProducts = carts[currentUserName];
 
-  cartProducts.forEach((product) => {
-    allProducts = JSON.parse(localStorage.getItem('products'));
-    const productData = allProducts.find(
-      (item) => item.id === product.productId
-    );
+    cartProducts.forEach((product) => {
+      allProducts = JSON.parse(localStorage.getItem('products'));
+      const productData = allProducts.find(
+        (item) => item.id === product.productId
+      );
 
-    const productItem = $(`
+      const productItem = $(`
           <div
             class="item p-3 d-flex justify-content-center align-items-center"
             id="${productData['id']}"
@@ -68,8 +70,9 @@ function drawProductItem() {
             </div>
             <hr />
             `);
-    $('#product-list').append(productItem);
-  });
+      $('#product-list').append(productItem);
+    });
+  } else alert('please login to use the cart');
 }
 $(function () {
   drawProductItem();

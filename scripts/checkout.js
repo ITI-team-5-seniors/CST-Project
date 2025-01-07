@@ -25,8 +25,7 @@ $(function () {
       e.preventDefault();
     }
   });
-  function displayMessage(message) {
-    $('#message').text(message);
+  function displayMessage() {
     $('#message').css({ display: 'flex', height: '200px' });
   }
 
@@ -52,7 +51,6 @@ $(function () {
       displayMessage('Card validation value must be 3 digits');
     } else {
       displayMessage(
-        '🚚 Your order is shipped! 🎉 and will arrive in just two days. Thank you for shopping with us! 😊'
       );
       order = {
         user: currentUserName,

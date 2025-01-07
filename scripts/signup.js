@@ -53,7 +53,7 @@ $(function () {
       return false;
     }
     if (!role || role === '' || role === 'default') {
-      displayMessage('Please select a valid role.');
+      displayMessage('Please select your role.');
       return false;
     }
     if (!username || !email || !password || !role) {
