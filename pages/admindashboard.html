@@ -24,6 +24,9 @@
             <li>
                 <a href="#usermanagement"><i class="fas fa-users"></i> Users</a>
             </li>
+            <li>
+                <a href="#checkoutmanagement"><i class="fa-solid fa-cart-shopping"></i>Checkout Management</a>
+            </li>
         </ul>
     </div>
 
@@ -105,7 +108,26 @@
                 </div>
             </div>
         </div>
-
+        <div class="dashboard-card table-card" id="checkoutmanagement">
+            <h5 class="mb-4">Checkout Management</h5>
+            <div class="table-responsive">
+                <table class="table" id="checkout-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User</th>
+                            <th>Items</th>
+                            <th>Total Price</th>
+                            <th>Delivery Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="checkout-table-body">
+                        <!-- Checkout details will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- Required JS scripts -->
