@@ -16,7 +16,7 @@
         height: 250px;
       }
       #success,
-      #warning {
+      #warning, #danger {
         display: none;
         margin: 0;
         position: fixed;
@@ -39,6 +39,11 @@
         Product added successfuly
         <a href="cart.html" class="alert-link">Go to cart</a>
       </div>
+      <div class="alert alert-danger" id="danger" role="alert">
+        Product out of stock
+        <a href="cart.html" class="alert-link">Go to cart</a>
+      </div>
+
       <div id="product-list" class="row g-4"></div>
     </div>
 
@@ -122,21 +127,21 @@
               });
 
               $productCard.find('.add-to-cart').on('click', () => {
-                let currentUser = JSON.parse(
-                  localStorage.getItem('currentUser')
-                );
-                if (currentUser) {
-                  addToCart(currentUser['username'], product.id, 1);
-                  $('#success').css({ display: 'block' });
-                  setTimeout(function () {
-                    $('#success').css({ display: 'none' });
-                  }, 1000);
-                } else {
-                  $('#warning').css({ display: 'block' });
-                  setTimeout(function () {
-                    $('#warning').css({ display: 'none' });
-                  }, 1000);
-                }
+                // let currentUser = JSON.parse(
+                //   localStorage.getItem('currentUser')
+                // );
+                // if (currentUser) {
+                  addToCart( product.id, 1);
+            //       $('#success').css({ display: 'block' });
+            //       setTimeout(function () {
+            //         $('#success').css({ display: 'none' });
+            //       }, 2000);
+            //     } else {
+            //       $('#warning').css({ display: 'block' });
+            //       setTimeout(function () {
+            //         $('#warning').css({ display: 'none' });
+            //       }, 2000);
+            //     }
               });
 
               $productList.append($productCard);

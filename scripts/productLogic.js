@@ -101,20 +101,48 @@ const getCart = (customerId) => {
   return carts[customerId] || [];
 };
 
-const addToCart = (username, productId, quantity) => {
-  const carts = JSON.parse(localStorage.getItem('carts') || {});
+const addToCart = (productId, quantity) => {
+  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser) {
+    let currentUserName = currentUser['username'];
+    const carts = JSON.parse(localStorage.getItem('carts') || {});
+    const existingItem = carts[currentUserName].find(
+      (item) => item.productId === productId
+    );
 
-  const existingItem = carts[username].find(
-    (item) => item.productId === productId
-  );
+    let allProducts = JSON.parse(localStorage.getItem('products'));
+    let stockProduct = allProducts.find((product) => product.id == productId);
 
-  if (existingItem) {
-    existingItem.quantity += quantity;
+    if (existingItem) {
+      if (existingItem.quantity + quantity > stockProduct.stock) {
+        $('#danger').css({ display: 'block' });
+        setTimeout(function () {
+          $('#danger').css({ display: 'none' });
+        }, 2000);
+      } else {
+        existingItem.quantity += quantity;
+      }
+    } else {
+      if (quantity > stockProduct.stock) {
+        $('#danger').css({ display: 'block' });
+        setTimeout(function () {
+          $('#danger').css({ display: 'none' });
+        }, 2000);
+      } else {
+        carts[currentUserName].push({ productId, quantity });
+      }
+    }
+    localStorage.setItem('carts', JSON.stringify(carts));
+    $('#success').css({ display: 'block' });
+    setTimeout(function () {
+      $('#success').css({ display: 'none' });
+    }, 2000);
   } else {
-    carts[username].push({ productId, quantity });
+    $('#warning').css({ display: 'block' });
+    setTimeout(function () {
+      $('#warning').css({ display: 'none' });
+    }, 2000);
   }
-
-  localStorage.setItem('carts', JSON.stringify(carts));
 };
 
 const removeFromCart = (customerId, productId) => {
