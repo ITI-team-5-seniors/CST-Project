@@ -96,9 +96,9 @@ const deleteProduct = (productId) => {
 };
 
 // Customer related functions
-const getCart = (customerId) => {
+const getCart = (customerName) => {
   const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  return carts[customerId] || [];
+  return carts[customerName] || [];
 };
 
 const addToCart = (productId, quantity) => {
@@ -109,9 +109,7 @@ const addToCart = (productId, quantity) => {
     const existingItem = carts[currentUserName].find(
       (item) => item.productId === productId
     );
-
-    let allProducts = JSON.parse(localStorage.getItem('products'));
-    let stockProduct = allProducts.find((product) => product.id == productId);
+        const stockProduct = getProductById( productId);
 
     if (existingItem) {
       if (existingItem.quantity + quantity > stockProduct.stock) {
@@ -152,8 +150,8 @@ const removeFromCart = (customerId, productId) => {
   localStorage.setItem('carts', JSON.stringify(carts));
 };
 
-const checkout = (customerId, shippingDetails, paymentDetails) => {
-  const cart = getCart(customerId);
+const checkout = (customerName ) => {//shippingDetails, paymentDetails
+  const cart = getCart(customerName);
   const products = getProducts();
   let orderTotal = 0;
 
@@ -169,11 +167,11 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
   // Create order
   const order = {
     id: generateId(),
-    customerId,
+    customerName,
     items: cart,
     total: orderTotal,
-    shippingDetails,
-    paymentDetails,
+    // shippingDetails,
+    // paymentDetails,
     status: 'Processing',
     date: new Date().toISOString(),
   };
@@ -185,7 +183,7 @@ const checkout = (customerId, shippingDetails, paymentDetails) => {
 
   // Clear cart
   const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  delete carts[customerId];
+  carts[customerName] = [];
   localStorage.setItem('carts', JSON.stringify(carts));
 
   // Update product stock

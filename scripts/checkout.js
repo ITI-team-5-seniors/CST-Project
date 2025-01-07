@@ -1,11 +1,18 @@
+import { checkout } from "./productLogic.js";
+
 $(function () {
   $('body').on('click', function () {
     $('#message').css({ display: 'none' });
   });
+  
+  function displayMessage(messge){
+    $('#message').text(messge);
+    $('#message').css({ display: 'block' });
+  }
 
   function calculateTotal() {
-    params = new URLSearchParams(location.search);
-    amount = parseFloat(params.get('amount'));
+    let params = new URLSearchParams(location.search);
+    let amount = parseFloat(params.get('amount'));
     if (isNaN(amount)) {
       amount = 0;
     }
@@ -31,16 +38,15 @@ $(function () {
 
   $('form').on('submit', function (e) {
     e.preventDefault();
-    currentUserName = JSON.parse(localStorage.getItem('currentUser'))[
+    let currentUserName = JSON.parse(localStorage.getItem('currentUser'))[
       'username'
     ];
-    carts = JSON.parse(localStorage.getItem('carts') || {});
-    cartProducts = carts[currentUserName];
-    orders = JSON.parse(localStorage.getItem('orders') || {});
-    orderDate = new Date();
+    // carts = JSON.parse(localStorage.getItem('carts') || {});
+    // cartProducts = carts[currentUserName];
+    // orders = JSON.parse(localStorage.getItem('orders') || {});
 
-    expiry = new Date($('#exp-date').val());
-    currentDate = new Date();
+    let expiry = new Date($('#exp-date').val());
+    let currentDate = new Date();
     if ($('#card-number').val().length < 12) {
       displayMessage('Card number must be 12 digits');
     } else if (expiry > new Date('2034-12-31') || expiry == 'Invalid Date') {
@@ -51,25 +57,28 @@ $(function () {
       displayMessage('Card validation value must be 3 digits');
     } else {
       $('#message').css({ display: 'flex', height: '200px' });
-      order = {
-        user: currentUserName,
-        products: cartProducts,
-        amount: amount,
-        date: orderDate,
-      };
-      orders.push(order);
-      allProducts = JSON.parse(localStorage.getItem('products'));
-      cartProducts.forEach((soldProduct) => {
-        let stockProduct = allProducts.find((product) => 
-          product.id == soldProduct['productId']
-        );
-        stockProduct.stock -= soldProduct['quantity'];
-        localStorage.setItem('products',JSON.stringify(allProducts))
-      });
+      
+      checkout(currentUserName)
+      // order = {
+      //   user: currentUserName,
+      //   products: cartProducts,
+      //   amount: amount,
+      //   date: orderDate,
+      // };
+      // orders.push(order);
 
-      carts[currentUserName] = [];
-      localStorage.setItem('carts', JSON.stringify(carts));
-      localStorage.setItem('orders', JSON.stringify(orders));
+      // cartProducts.forEach((soldProduct) => {
+      //   updateProduct(soldProduct['productId'], 'stock'-=soldProduct['quantity'])
+        // let stockProduct = getProductById(soldProduct['productId']);
+        // stockProduct.stock -= soldProduct['quantity'];
+        // localStorage.setItem('products', JSON.stringify(allProducts));
+      // });
+
+      // carts[currentUserName] = [];
+      // localStorage.setItem('carts', JSON.stringify(carts));
+      // localStorage.setItem('orders', JSON.stringify(orders));
+      let params = new URLSearchParams(location.search);
+  
       params.set('amount', 0);
       history.replaceState(null, '', '?' + params.toString());
       calculateTotal();
