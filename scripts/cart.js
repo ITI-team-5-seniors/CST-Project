@@ -85,14 +85,17 @@ $(function () {
 
       let allProducts = JSON.parse(localStorage.getItem('products'));
       let stockProduct = allProducts.find((product) => product.id == id);
-      
+
       if (product['quantity'] < stockProduct.stock) {
         product['quantity'] += 1;
         localStorage.setItem('carts', JSON.stringify(carts));
         $(e.target).next().text(product['quantity']);
         calculateTotal();
       } else {
-        alert('Product out of stock');
+        $('#danger').css({ display: 'block' });
+        setTimeout(function () {
+          $('#danger').css({ display: 'none' });
+        }, 2000);
       }
     });
   });
