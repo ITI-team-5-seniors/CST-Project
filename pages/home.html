@@ -9,6 +9,31 @@
     <link href= "../styles/style.css" rel="stylesheet">
     <script src="jq-3-7-1.js"></script>
     <script src="../scripts/script.js"></script>
+    <script type="module" src="../scripts/productLogic.js"></script>
+    <script type="module" src="../scripts/search.js"></script>
+    <style>
+      #search-results {
+          max-height: 300px;
+          overflow-y: auto;
+          background-color: white;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          padding: 0;
+          list-style-type: none;
+          margin: 0;
+          z-index: 1000;
+      }
+      
+      #search-results .list-group-item {
+          cursor: pointer;
+      }
+      
+      #search-results .list-group-item:hover {
+          background-color: #f8f9fa;
+      }
+    
+    </style>
 </head>
 
 <body onload="startshow()">
@@ -18,29 +43,41 @@
     </div>
     
     <header>
-        <div id="logo">
-            <img src="../Photos/logo.png" alt="logo">
-        </div>
-
-        <ul class="nav">
-            <li><a href="#">Home</a></li>
-            <li><a href="./Catagorie.html">Categories</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="./CONTACT_US.html">Contact</a></li>
-        </ul>
-
-        <div id="search">
-            <input type="search" placeholder="    What are you looking for? " style="word-spacing:2px">
-        </div>
-
-        <div id="icons">
-            <a href="./cart.html"><i class="fa-solid fa-cart-shopping icon"></i></a>
-            <a href="./login.html"><i class="fa-regular fa-user icon"></i></a>
-        </div>
-        <div id="menu-toggle" onclick="toggleMenu()">
+      <div id="logo">
+          <img src="../Photos/logo.png" alt="logo">
+      </div>
+  
+      <ul class="nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="./Catagorie.html">Categories</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="./CONTACT_US.html">Contact</a></li>
+      </ul>
+  
+      <div id="search" class="position-relative">
+          <input
+              type="search"
+              id="navbarSearch"
+              placeholder="    What are you looking for? "
+              style="word-spacing:2px"
+          >
+          <ul
+              id="search-results"
+              class="list-group position-absolute w-100 mt-1"
+              style="display: none; z-index: 1000;"
+          ></ul>
+      </div>
+  
+      <div id="icons">
+          <a href="./cart.html"><i class="fa-solid fa-cart-shopping icon"></i></a>
+          <a href="./login.html"><i class="fa-regular fa-user icon"></i></a>
+      </div>
+      <div id="menu-toggle" onclick="toggleMenu()">
           <i class="fa fa-bars"></i>
       </div>
-    </header>
+  </header>
+  
+
     <div id="cover">
         <img id="myimgg" src="../Photos/imgg.webp" alt="" class="col-12 h-auto">
     </div>
@@ -178,16 +215,59 @@
     <p>Copy Right 2024 &copy; By <span style="color: rgb(15, 72, 196);">Theme-fair</span> All Rights Reserved</p>
     </footer>
 
-    <script>
-
-      $(document).ready(function () {
-        $("#mainsection").on("click", ".card", function () {
-            const productType = $(this).find(".card-title").text().trim();
-            window.location.href = `Product_Listing.html?type=${encodeURIComponent(productType)}`;
-        });
+    <!-- <script type="module">
+      import { getProducts } from '../scripts/productLogic.js';
+  
+      function handleNavbarSearch() {
+          const searchQuery = document.getElementById('navbarSearch').value.toLowerCase();
+          const $searchResults = $('#search-results');
+          const products = getProducts();
+  
+          const filteredProducts = products.filter(product =>
+              product.name.toLowerCase().includes(searchQuery)
+          );
+  
+          $searchResults.empty();
+  
+          // If no results, show a message
+          if (!searchQuery) {
+              $searchResults.hide();
+              return;
+          }
+  
+          if (filteredProducts.length === 0) {
+              $searchResults.append('<li class="list-group-item">No products match your search.</li>');
+              $searchResults.show();
+              return;
+          }
+  
+          // Display filtered results as a list
+          filteredProducts.forEach(product => {
+              const $productItem = $(`
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>${product.name}</span>
+                      <button class="btn btn-sm btn-primary view-product" data-id="${product.id}">View</button>
+                  </li>
+              `);
+  
+              // Add click event for the "View" button
+              $productItem.find('.view-product').on('click', () => {
+                  const queryString = new URLSearchParams({ id: product.id }).toString();
+                  window.location.href = `Product_Info.html?${queryString}`;
+              });
+  
+              $searchResults.append($productItem);
+          });
+  
+          $searchResults.show();
+      }
+  
+      $(document).ready(() => {
+          $('#navbarSearch').on('input', handleNavbarSearch);
       });
-
-    </script>
+  </script> -->
+  
+  
 
 </body>
 </html>
