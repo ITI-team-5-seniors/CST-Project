@@ -10,7 +10,7 @@
     />
     <!-- <link href="../styles/style.css" rel="stylesheet" /> -->
     <script src="../scripts/jq-3-7-1.js"></script>
-    <script src="../scripts/productLogic.js" type="module"></script>
+    <!-- <script src="../scripts/productLogic.js" type="module"></script> -->
     <style>
       img {
         height: 250px;
@@ -61,10 +61,10 @@
       $(document).ready(() => {
         const productType = getQueryParam('type'); // Retrieve query parameters ex: ?type=laptop
 
-        initializeData()
-          .then(() => {
+        // initializeData()
+        //   .then(() => {
             const products = getProducts();
-            console.log('Loaded products:', products);
+            // console.log('Loaded products:', products);
 
             const $productList = $('#product-list');
             if (!products || products.length === 0) {
@@ -86,7 +86,6 @@
             }
 
             filteredProducts.forEach((product) => {
-              //const imagePath = `../images/products_images/${product.id}.png`;
 
               const $productCard = $(`
                         <div class="col-md-4">
@@ -145,13 +144,13 @@
 
               $productList.append($productCard);
             });
-          })
-          .catch((err) => {
-            console.error('Initialization error:', err);
-            $('#product-list').append(
-              '<p class="text-center text-danger">Error loading products.</p>'
-            );
-          });
+        //   })
+        //   .catch((err) => {
+        //     console.error('Initialization error:', err);
+        //     $('#product-list').append(
+        //       '<p class="text-center text-danger">Error loading products.</p>'
+        //     );
+        //   });
       });
     </script>
   </body>

@@ -20,13 +20,13 @@ const fetchAndStoreProducts = () => {
     });
 };
 
-fetchAndStoreProducts()
-  .then((products) => {
-    console.log('Fetched products:', products);
-  })
-  .catch((error) => {
-    console.error('Error fetching products:', error);
-  });
+// fetchAndStoreProducts()
+//   .then((products) => {
+//     console.log('Fetched products:', products);
+//   })
+//   .catch((error) => {
+//     console.error('Error fetching products:', error);
+//   });
 
 // Initialize data in local storage
 const initializeData = () => {
@@ -36,9 +36,9 @@ const initializeData = () => {
     console.log('Fetching products for initialization...');
     initPromises.push(fetchAndStoreProducts());
   }
-  // if (!localStorage.getItem('carts')) {
-  //     localStorage.setItem('carts', JSON.stringify({}));
-  // }
+  if (!localStorage.getItem('carts')) {
+      localStorage.setItem('carts', JSON.stringify({}));
+  }
   if (!localStorage.getItem('orders')) {
     localStorage.setItem('orders', JSON.stringify([]));
   }
