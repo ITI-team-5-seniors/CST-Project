@@ -106,8 +106,6 @@ $(function() {
           localStorage.setItem("users", JSON.stringify(users));
         }
       }
-    
-      // Remove the request from reset requests
       requestpass = requestpass.filter((req) => req.id != requestId);
       localStorage.setItem("requestpass", JSON.stringify(requestpass));
     
@@ -137,19 +135,13 @@ $(function() {
         displaySellers();
     });
     $(document).ready(function() {
-        // Function to load checkout orders and display in table and cards
         function loadCheckoutOrders() {
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
             const tableBody = $('#checkout-table-body');
             const cardContainer = $('#checkout-cards');
-            
-            // Clear any existing rows and cards
             tableBody.empty();
             cardContainer.empty();
-    
-            // Loop through orders and create table rows and cards
             orders.forEach((order, index) => {
-                // Create table row
                 const row = `
                     <tr>
                         <td>${index + 1}</td>
