@@ -90,6 +90,72 @@ header {
 }
 
 
+#dd{
+    margin-top: 50px;
+    width: auto; /* بدلاً من 100vw */
+    height: auto; /* 100% من ارتفاع نافذة المتصفح */
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* لتوسيط المحتوى عموديًا */
+    text-align: center;
+    background-color: rgb(179, 181, 182);
+    /* background-color: #ffe6ec; */
+}
+  
+  #h1 {
+    font-size: 2.5em;
+    color: #ffffff;
+ 
+  }
+  
+  .subtitle {
+    font-size: 1.3em;
+    color:  #ffffff;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  
+  }
+  
+  .feature {
+    border:none;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 4px 4px 6px  #ffffff;
+    border: 1px solid  rgb(255, 255, 255);
+    
+  }
+  
+  .feature i {
+    font-size: 2em;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  .feature h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .feature p {
+    font-size: 1em;
+    color: #ffffff;
+  }
+
+
+
+
+
+
 
 /*categories*/
      
@@ -286,6 +352,23 @@ h2{
       height: 50px;
 
     }
+
+    
+    .feature p {
+        display: none;
+         
+       }
+       .feature h3 {
+          font-size: 15px;
+       }
+       #h1{
+          font-size: 35px;
+       }
+       .subtitle{
+         
+          font-size: 15px;
+       }
+     
 
 
    

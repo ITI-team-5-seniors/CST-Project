@@ -11,10 +11,18 @@ export const initializeData = () => {
     if (!localStorage.getItem('products')) {
         localStorage.setItem('products', JSON.stringify([]));
     }
+    
 };
 
+
+
 export const getProducts = () => {
-    return JSON.parse(localStorage.getItem('products') || '[]');
+    let products= JSON.parse(localStorage.getItem('products') || '[]');
+    return products;
+};
+
+export const getorders = () => {
+    return JSON.parse(localStorage.getItem('orders') || '[]');
 };
 
 
@@ -32,8 +40,12 @@ export const updateProduct = (productId, updatedFields) => {
     if (index !== -1) {
         products[index] = { ...products[index], ...updatedFields };
         localStorage.setItem('products', JSON.stringify(products));
+         
+   
         return products[index];
+
     }
+   
     return null;
 };
 
@@ -45,6 +57,3 @@ export const deleteProduct = (productId) => {
     const updatedProducts = products.filter(product => product.id !== productId);
     localStorage.setItem('products', JSON.stringify(updatedProducts));
 };
-
-const arr=JSON.parse(localStorage.getItem('products'));
-console.log(arr);
