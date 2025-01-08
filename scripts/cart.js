@@ -1,16 +1,25 @@
+import {
+  getCart,
+  setCart,
+  getProductById,
+  removeFromCart,
+} from './productLogic.js';
+
 function calculateTotal() {
   let quantities = [];
   let prices = [];
+  let total = 0;
   $('.item-quantity').each(function () {
     quantities.push(parseInt($(this).text()));
   });
   $('.item-price').each(function () {
     prices.push(parseFloat($(this).text()));
   });
-  subtotals = prices.map((price, index) => price * quantities[index]);
+  let subtotals = prices.map((price, index) => price * quantities[index]);
+  console.log(subtotals);
   $('.subtotal').empty();
   subtotals.map((total, index) => {
-    subtotal = $('<h4>').text(`subtotal ${index + 1} : ${total}$ `);
+    let subtotal = $('<h4>').text(`subtotal ${index + 1} : ${total}$ `);
     subtotal.appendTo($('.subtotal'));
   });
   $('.subtotal').append($('<hr>'));
@@ -23,19 +32,18 @@ function calculateTotal() {
   if (total == 0) {
     $('#checkout-btn').attr('disabled', 'true');
   }
+  return total;
 }
 function drawProductItem() {
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser) {
-    currentUserName = currentUser['username'];
-    carts = JSON.parse(localStorage.getItem('carts') || {});
-    cartProducts = carts[currentUserName];
-
+  // let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  // if (currentUser) {
+  //   let currentUserName = currentUser['username'];
+  // let carts = JSON.parse(localStorage.getItem('carts') || {});
+  //   cartProducts = carts[currentUserName];
+  let cartProducts = getCart();
+  if (cartProducts) {
     cartProducts.forEach((product) => {
-      allProducts = JSON.parse(localStorage.getItem('products'));
-      const productData = allProducts.find(
-        (item) => item.id === product.productId
-      );
+      const productData = getProductById(product.productId);
 
       const productItem = $(`
           <div
@@ -72,62 +80,68 @@ function drawProductItem() {
             `);
       $('#product-list').append(productItem);
     });
-  } else alert('please login to use the cart');
-}
-$(function () {
-  drawProductItem();
-  calculateTotal();
-
-  $(`.item #increment`).each(function () {
-    $(this).on('click', function (e) {
-      id = $(this).parent().parent()[0].id;
-      let product = cartProducts.find((product) => product['productId'] == id);
-
-      let allProducts = JSON.parse(localStorage.getItem('products'));
-      let stockProduct = allProducts.find((product) => product.id == id);
-
-      if (product['quantity'] < stockProduct.stock) {
-        product['quantity'] += 1;
-        localStorage.setItem('carts', JSON.stringify(carts));
-        $(e.target).next().text(product['quantity']);
-        calculateTotal();
-      } else {
-        $('#danger').css({ display: 'block' });
-        setTimeout(function () {
-          $('#danger').css({ display: 'none' });
-        }, 2000);
-      }
+    $(`.item #increment`).each(function () {
+      $(this).on('click', function (e) {
+        let id = $(this).parent().parent()[0].id;
+        let product = cartProducts.find(
+          (product) => product['productId'] == id
+        );
+        let stockProduct = getProductById(id);
+        if (product['quantity'] < stockProduct['stock']) {
+          product['quantity'] += 1;
+          $(e.target).next().text(product['quantity']);
+          calculateTotal();
+          setCart(cartProducts);
+        } else {
+          $('#danger').css({ display: 'block' });
+          setTimeout(function () {
+            $('#danger').css({ display: 'none' });
+          }, 2000);
+        }
+      });
     });
-  });
 
-  $(`.item #decrement`).each(function () {
-    $(this).on('click', function (e) {
-      id = $(this).parent().parent()[0].id;
-      let product = cartProducts.find((product) => product['productId'] == id);
-      if (product['quantity'] > 0) {
-        product['quantity'] -= 1;
-      }
-      localStorage.setItem('carts', JSON.stringify(carts));
-      $(e.target).prev().text(product['quantity']);
+    $(`.item #decrement`).each(function () {
+      $(this).on('click', function (e) {
+        let id = $(this).parent().parent()[0].id;
+        let product = cartProducts.find(
+          (product) => product['productId'] == id
+        );
+        if (product['quantity'] > 0) {
+          product['quantity'] -= 1;
+        }
+        $(e.target).prev().text(product['quantity']);
+        calculateTotal();
+        setCart(cartProducts);
+      });
+    });
+
+    $('.item .delete-icon').on('click', function () {
+      let id = $(this).parent()[0].id;
+      // console.log(cartProducts);
+      // console.log(id);
+      // cartProducts = cartProducts.filter((product) => product['productId'] != id);
+      // carts[currentUserName] = cartProducts;
+      // localStorage.setItem('carts', JSON.stringify(carts));
+      removeFromCart(id);
+      $(this).parent().next().remove();
+      $(this).parent().remove();
       calculateTotal();
     });
-  });
+  } else {
+    $('#info').css({ display: 'block' });
+    setTimeout(function () {
+      $('#info').css({ display: 'none' });
+    }, 2000);
+  }
+}
 
-  $('.item .delete-icon').on('click', function () {
-    id = $(this).parent()[0].id;
-    console.log(cartProducts);
-    console.log(id);
-    cartProducts = cartProducts.filter((product) => product['productId'] != id);
-    carts[currentUserName] = cartProducts;
-    localStorage.setItem('carts', JSON.stringify(carts));
-
-    $(this).parent().next().remove();
-    $(this).parent().remove();
-    calculateTotal();
-  });
-
+$(function () {
+  drawProductItem();
+  let amount = calculateTotal();
+  console.log(amount);
   $('#checkout-btn').on('click', function () {
-    window.location.href = `checkout.html?amount=${total}`;
+    window.location.href = `checkout.html?amount=${amount}`;
   });
   $('#go-shopping').on('click', function () {
     window.location.href = `Product_Listing.html`;

@@ -72,7 +72,8 @@ const getProducts = () => {
 
 const getProductById = (productId) => {
   const products = getProducts();
-  return products.find((product) => product.id === productId);
+  let product = products.find((product) => product.id == productId);
+  return product;
 };
 
 const addProduct = (product) => {
@@ -101,22 +102,40 @@ const deleteProduct = (productId) => {
   );
   localStorage.setItem('products', JSON.stringify(updatedProducts));
 };
+const getCurrentUser = () => {
+  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser) {
+    return currentUser['username'];
+  } else return false;
+};
 
 // Customer related functions
-const getCart = (customerName) => {
-  const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  return carts[customerName] || [];
+const getCart = () => {
+  let username = getCurrentUser();
+  if (username) {
+    const carts = JSON.parse(localStorage.getItem('carts') || '{}');
+    return carts[username] || [];
+  } else return false;
+};
+const setCart = (products) => {
+  let username = getCurrentUser();
+  if (username) {
+    let carts = JSON.parse(localStorage.getItem('carts') || '{}');
+    carts[username] = products;
+    localStorage.setItem('carts', JSON.stringify(carts));
+    return true;
+  } else return false;
 };
 
 const addToCart = (productId, quantity) => {
-  let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (currentUser) {
-    let currentUserName = currentUser['username'];
-    const carts = JSON.parse(localStorage.getItem('carts') || {});
-    const existingItem = carts[currentUserName].find(
-      (item) => item.productId === productId
+  let cart = getCart()
+  if(cart){
+    console.log(cart)
+  let existingItem = cart.find(
+      (item) => item.productId == productId
     );
-        const stockProduct = getProductById( productId);
+    console.log(existingItem)
+    const stockProduct = getProductById(productId);
 
     if (existingItem) {
       if (existingItem.quantity + quantity > stockProduct.stock) {
@@ -134,11 +153,12 @@ const addToCart = (productId, quantity) => {
           $('#danger').css({ display: 'none' });
         }, 2000);
       } else {
-        carts[currentUserName].push({ productId, quantity });
+
+        cart.push({ productId, quantity });
       }
     }
-    localStorage.setItem('carts', JSON.stringify(carts));
-    $('#success').css({ display: 'block' });
+    setCart(cart)    
+  $('#success').css({ display: 'block' });
     setTimeout(function () {
       $('#success').css({ display: 'none' });
     }, 2000);
@@ -150,14 +170,16 @@ const addToCart = (productId, quantity) => {
   }
 };
 
-const removeFromCart = (customerId, productId) => {
-  const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-  const cart = carts[customerId] || [];
-  carts[customerId] = cart.filter((item) => item.productId !== productId);
-  localStorage.setItem('carts', JSON.stringify(carts));
+const removeFromCart = (productId) => {
+  let cart = getCart();
+  console.log(cart)
+  cart = cart.filter((item) => item.productId != productId);
+  console.log(cart)
+  setCart(cart);
 };
 
-const checkout = (customerName ) => {//shippingDetails, paymentDetails
+const checkout = (customerName) => {
+  //shippingDetails, paymentDetails
   const cart = getCart(customerName);
   const products = getProducts();
   let orderTotal = 0;
@@ -223,6 +245,7 @@ export {
   updateProduct,
   deleteProduct,
   getCart,
+  setCart,
   addToCart,
   removeFromCart,
   checkout,
