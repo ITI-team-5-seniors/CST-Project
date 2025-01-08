@@ -14,12 +14,9 @@
     />
     <link rel="stylesheet" href="../styles/cart.css" />
     <script src="../scripts/jq-3-7-1.js"></script>
-    <script src="../scripts/cart.js"></script>
-  </head>
-  <body>
-    <div
-      class="alert alert-danger"
-      style="
+    <script src="../scripts/cart.js" type="module"></script>
+    <style>
+      #info ,#danger {
         display: none;
         margin: 0;
         position: fixed;
@@ -29,10 +26,16 @@
         width: 500px;
         z-index: 2;
         text-align: center;
-      "
-      id="danger"
-      role="alert"
-    >
+      }
+    </style>
+  </head>
+  <body>
+    <div class="alert alert-info" id="info" role="alert">
+      Please login to use the cart
+      <a href="login.html" class="alert-link">Login</a>
+    </div>
+
+    <div class="alert alert-danger" id="danger" role="alert">
       Product out of stock
     </div>
 
