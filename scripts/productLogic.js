@@ -30,6 +30,12 @@ const fetchAndStoreProducts = () => {
 
 // Initialize data in local storage
 const initializeData = () => {
+  // Check if data has already been initialized
+  if (localStorage.getItem('dataInitialized')) {
+    console.log('Data has already been initialized.');
+    return $.Deferred().resolve().promise(); // Return a resolved promise to maintain consistency
+  }
+
   const initPromises = [];
 
   if (!localStorage.getItem('products')) {
@@ -37,7 +43,7 @@ const initializeData = () => {
     initPromises.push(fetchAndStoreProducts());
   }
   if (!localStorage.getItem('carts')) {
-      localStorage.setItem('carts', JSON.stringify({}));
+    localStorage.setItem('carts', JSON.stringify({}));
   }
   if (!localStorage.getItem('orders')) {
     localStorage.setItem('orders', JSON.stringify([]));
@@ -46,6 +52,7 @@ const initializeData = () => {
   return $.when(...initPromises)
     .done(() => {
       console.log('Data initialized.');
+      localStorage.setItem('dataInitialized', 'true'); // Set the initialization flag
     })
     .fail((error) => {
       console.error('Initialization failed:', error);
