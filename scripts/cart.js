@@ -16,7 +16,6 @@ function calculateTotal() {
     prices.push(parseFloat($(this).text()));
   });
   let subtotals = prices.map((price, index) => price * quantities[index]);
-  console.log(subtotals);
   $('.subtotal').empty();
   subtotals.map((total, index) => {
     let subtotal = $('<h4>').text(`subtotal ${index + 1} : ${total}$ `);
@@ -139,7 +138,6 @@ function drawProductItem() {
 $(function () {
   drawProductItem();
   let amount = calculateTotal();
-  console.log(amount);
   $('#checkout-btn').on('click', function () {
     window.location.href = `checkout.html?amount=${amount}`;
   });
