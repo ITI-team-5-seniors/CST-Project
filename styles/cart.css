@@ -3,9 +3,7 @@
 }
 body
 {
-  /* padding: 80px; */
-  background-color: rgb(196, 207, 227);
-
+  padding: 80px;
 }
 h4 {
   font-size: calc(1vw + 0.5rem) ;
