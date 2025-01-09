@@ -1,7 +1,9 @@
+import { getCart } from "./productLogic.js";
+
 var imgarr= ["../photos/1.png","../photos/2.png","../photos/3.png","../photos/4.png","../photos/1.png"];
         var i=0;
           function startshow(){
-              t=setInterval("nextfun()",1000);
+              setInterval(nextfun,1000);
           }
           function nextfun(){
               i++;
@@ -15,6 +17,7 @@ var imgarr= ["../photos/1.png","../photos/2.png","../photos/3.png","../photos/4.
             nav.classList.toggle('menu-show');
         }
         $(function(){
+        startshow()
         $('#dropdown-toggle').on('click', function (e) {
             e.stopPropagation();
     
@@ -25,6 +28,9 @@ var imgarr= ["../photos/1.png","../photos/2.png","../photos/3.png","../photos/4.
         $(document).on('click', function () {
             $('.dropdown-menu').removeClass('show');
         });
+        let cart = getCart()
+        $('#cart-count').text(cart.length)
         
     });
+
  
