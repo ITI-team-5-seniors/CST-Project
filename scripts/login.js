@@ -61,7 +61,7 @@ $(function () {
         } else if (userRole === 'seller') {
           window.location = 'seller.html';
         } else {
-          window.location = 'Product_Listing.html';
+          window.location = 'home.html';
         }
         return true;
       }

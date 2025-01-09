@@ -1,6 +1,12 @@
 *{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+body
+{
+  padding: 80px;
+  background-color: rgb(196, 207, 227);
+
+}
 h4 {
   font-size: calc(1vw + 0.5rem) ;
   margin-top: 25px;
@@ -26,7 +32,7 @@ input {
 img:hover{
     transform: scale(1.2);
     transition: 0.5s;
-    box-shadow: #0dcaf0 2px 2px 4px;
+    box-shadow: rgb(101, 101, 154) 2px 2px 4px;
 
 }
 i:hover{
@@ -36,7 +42,7 @@ i:hover{
 }
 
 a{
-  color: #0dcaf0;
+  color: rgb(34, 34, 208);
   text-decoration: none;
   font-size: calc(1.5vw + 0.5rem);
   
@@ -44,18 +50,20 @@ a{
 a:hover {
   transform: translateX(-15px) scale(1.2);
   transition: 0.5s;
+  color: white;
 }
 .summary:hover {
-  background-color: #0dcaf0 !important;
+  background-color:rgb(34, 34, 208)!important;
   transform: scale(1.1);
   transition: 0.5s;
+  color: white;
 }
 #checkout-btn {
   height: calc(2vw + 1rem);
   font-size: calc(0.5vw + 0.5rem);
 }
 #checkout-btn:hover, #checkout-btn:disabled {
-  background-color: #637e84;
-  color: white;
+  background-color:white;
+  color: black;
   transition: 0.5s;
 }
