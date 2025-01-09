@@ -4,9 +4,13 @@
     padding: 0%;
     box-sizing: border-box;
 }
+*{
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+
+}
 body {
     overflow-x: hidden;
-    font-family:'Times New Roman', Times, serif
+        /* font-family:'Times New Roman', Times, serif */
 } 
  /* mainheader */
 #topbar {
@@ -255,7 +259,7 @@ h2{
 
     .card {
         max-height: 200px; 
-    } 
+    }
 
     .nav {
     align-items: start;

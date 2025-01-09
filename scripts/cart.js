@@ -58,14 +58,14 @@ function drawProductItem() {
               <h6 class="item-name col-3 mx-2">${productData['name']}</h6>
             <div class="controls col-3 d-sm-flex justify-content-center">
               <input
-                class="bg-info border-0 rounded"
+                class="bg-primary border-0 rounded"
                 id="increment"
                 type="button"
                 value="+"
                 />
                 <h6 class="fw-medium m-2 item-quantity">${product['quantity']}</h6>
                 <input
-                class="bg-info border-0 rounded px-2"
+                class="bg-primary border-0 rounded px-2"
                 id="decrement"
                 type="button"
                 value="-"
@@ -131,7 +131,7 @@ function drawProductItem() {
   } else {
     $('#info').css({ display: 'block' });
     setTimeout(function () {
-      $('#info').css({ display: 'none' });
+      $('info').css({ display: 'none' });
     }, 2000);
   }
 }

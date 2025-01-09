@@ -1,0 +1,106 @@
+body{
+    background-color: rgb(196, 207, 227);
+}
+*{
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+
+}
+.customer-card{
+    max-width: 1000px;
+    margin: 3rem auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgb(118, 112, 226);
+    height: auto;
+
+    background-color: white;
+}
+
+button{
+    background-color: blue;
+    border: 1px solid #3498db;
+    border-radius: 10px;
+    color: white;
+    width: 100px;
+    height: 20px;
+    padding-left: 2px;
+    
+}
+.customer-picture{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+}
+.order-list{
+    list-style: none;
+    padding: 0;
+    
+}
+.order-list li {
+    padding: 10px;
+    border-bottom: 1px solid black ;
+
+}
+.order-list li img{
+    width: 200px;
+    display: flex;
+    padding: 20px;
+}
+.order-list li:last-child {
+    border-bottom: none;
+}
+
+footer{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    color: white;
+}
+
+.foot i{
+      margin-top: 20px;
+      margin-right: 2px;
+      }
+
+      /* welcome text styling*/ 
+      .welcome-text {
+        font-size: 36px; 
+        color: #2c3e50; 
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(45deg, #3498db, #110f12); 
+        color: transparent;
+        background-clip: text; 
+        display:block; 
+        animation: slideIn 1.5s ease-out, glow 1.5s infinite alternate; 
+        border-radius: 10px;
+    }
+    @keyframes slideIn {
+        0% {
+            transform: translateY(-50px); /* Start position */
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0); /* End position */
+            opacity: 1;
+        }
+    }
+    
+    /* Glow effect */
+    @keyframes glow {
+        0% {
+            text-shadow: 0 0 10px #3498db, 0 0 20px #9b59b6;
+        }
+        100% {
+            text-shadow: 0 0 20px #e74c3c, 0 0 30px #f39c12;
+        }
+    }
+    
+
+
+/* header styling*/

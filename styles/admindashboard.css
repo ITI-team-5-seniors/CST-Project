@@ -4,6 +4,10 @@
     --primary-color: #2c3e50;
     --secondary-color: #34495e;
 }
+*{
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+
+}
 .sidebar {
     width: var(--sidebar-width);
     height: 100vh;
