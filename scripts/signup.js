@@ -3,33 +3,27 @@ function displayMessage(message) {
   $('#message').css({ display: 'block' });
 }
 
-
-$(function () { 
+$(function () {
   $('#signup-form').on('submit', function (event) {
     event.preventDefault();
 
-    const username = $('#username').val();
-    const email = $('#email').val();
-    const password = $('#password').val();
+    const username = $('#username').val().trim();
+    const email = $('#email').val().trim();
+    const password = $('#password').val().trim();
     const role = $('#role').val();
 
-
     $('body').on('click', function () {
-      $("#message").css({ display: 'none' });
+      $('#message').css({ display: 'none' });
     });
 
     if (validateForm(username, email, password, role)) {
       if (role === 'admin') {
-        // Admin will be added only via login, not sign-up
         displayMessage('Admin role cannot be added via sign-up.');
       } else if (role === 'seller') {
         addSeller(username, email, password, role); // Seller
       } else {
         addUser(username, email, password, role); // Regular user
-        $('#username').val('');
-        $('#email').val('');
-        $('#password').val('');
-        $('#role').val('');
+        clearForm();
       }
     }
   });
@@ -57,10 +51,6 @@ $(function () {
       displayMessage('Please select your role.');
       return false;
     }
-    if (!username || !email || !password || !role) {
-      displayMessage('All fields are required.');
-      return;
-    }
     return true;
   }
 
@@ -76,11 +66,11 @@ $(function () {
       displayMessage('Email already exists. Please choose another one.');
     } else {
       const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
-    const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
       const newUser = { username, email, encryptedPassword, role };
       users.push(newUser);
-      if(role=='customer'){
-        carts[username]=[]
+      if (role == 'customer') {
+        carts[username] = [];
       }
       localStorage.setItem('carts', JSON.stringify(carts));
       localStorage.setItem('users', JSON.stringify(users));
@@ -98,14 +88,19 @@ $(function () {
     } else if (emailExists) {
       displayMessage('Email already exists. Please choose another one.');
     } else {
-      // Encrypt password
       const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
-
       const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
       const newSeller = { username, email, encryptedPassword, role };
       sellers.push(newSeller);
       localStorage.setItem('sellers', JSON.stringify(sellers));
       displayMessage('Seller added successfully!');
     }
+  }
+
+  function clearForm() {
+    $('#username').val('');
+    $('#email').val('');
+    $('#password').val('');
+    $('#role').val('');
   }
 });
