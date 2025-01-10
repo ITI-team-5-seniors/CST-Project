@@ -107,20 +107,16 @@ document.getElementById('product-form').addEventListener('submit', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const selectElement = document.getElementById('type');
-    
-    // Get products from localStorage
+   
     const products = JSON.parse(localStorage.getItem('products') || '[]');
-    
-    // Extract unique types using Set
+  
     const uniqueTypes = [...new Set(products.map(product => product.type))];
     
-    // Sort types alphabetically
+ 
     uniqueTypes.sort();
-    
-    // Clear existing options
-    selectElement.innerHTML = '';
-    
-    // Add default "All Types" option if needed
+   
+    // selectElement.innerHTML = '';
+   
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
     defaultOption.textContent = 'All Types';
