@@ -1,9 +1,13 @@
 *{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 0;
+  margin: 0;
 }
 body
 {
-  padding: 80px;
+  overflow-x: hidden;
+
+  padding-top: 80px;
 }
 h4 {
   font-size: calc(1vw + 0.5rem) ;
@@ -33,19 +37,19 @@ img:hover{
     box-shadow: rgb(101, 101, 154) 2px 2px 4px;
 
 }
-i:hover{
+#cartsicons:hover{
   cursor: pointer;
   transform: scale(1.5);
   transition: 1s;
 }
 
-a{
+#go-shopping{
   color: rgb(34, 34, 208);
   text-decoration: none;
   font-size: calc(1.5vw + 0.5rem);
   
 }
-a:hover {
+#go-shopping:hover {
   transform: translateX(-15px) scale(1.2);
   transition: 0.5s;
   color: white;
@@ -65,3 +69,72 @@ a:hover {
   color: black;
   transition: 0.5s;
 }
+/* header styling */
+  #icons a, .dropdown {
+  display: flex;
+  align-items: center; 
+  }
+  
+  
+  #logo img {
+  max-width: 100%;
+  height: auto;
+  }
+  
+  .navbar-nav .nav-link {
+  padding: 0 20px; 
+  }
+ 
+  
+  #search input[type="search"] {
+  width: 300px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  }
+  
+  #search-results {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+  z-index: 1000;
+  }
+  
+  #search-results .list-group-item {
+  cursor: pointer;
+  }
+  
+  #search-results .list-group-item:hover {
+  background-color: #f8f9fa;
+  }
+  
+  
+  
+  @media (max-width: 768px) {
+    #icons {
+  display: none !important 
+  }
+ 
+  }
+  
+  
+  /*footer style*/
+  footer{
+  background-color: rgb(0, 0, 0);
+  width: 100vw;
+  height: 100px;
+  text-align: center;
+  color: white;
+  }
+  
+  .foot i{
+  margin-top: 20px;
+  margin-right: 2px;
+  
+  }

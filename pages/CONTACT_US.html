@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Contact_us_page</title>
-    
+    <script type="module" src="../scripts/search.js"></script>
+
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -21,6 +22,50 @@
 
 </head>
 <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../Photos/logo.png" alt="logo" style="width: 90px;">
+            </a>
+  
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav gap-md-3">
+                    <li class="nav-item"><a class="nav-link text-center" href="./home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-center" href="./Catagorie.html">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link text-center" href="./CONTACT_US.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link text-center" href="./login.html" id="login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link text-center" href="./cart.html" id="login">Cart</a></li>
+
+                </ul>
+            </div>
+  
+  
+            <div id="search" class="d-none d-md-block position-relative me-3">
+                <input type="search" id="navbarSearch" placeholder="What are you looking for?" class="form-control">
+                <ul id="search-results" class="list-group position-absolute w-100 mt-1" style="display: none; z-index: 1000;"></ul>
+            </div>
+  
+            <div id="icons" class="d-flex align-items-center">
+                <a href="./cart.html" class="d-flex me-3">
+                <i class="fa-solid fa-cart-shopping icon"></i>
+                <div id="cart-count"></div>
+            </a>
+          
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="AboutUser.html">Profile</a></li>
+                        <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
     <div  class="row"  style="text-align: center; margin: 20px 0;" id="map">
         <h2 class="col-12 col-sm-12 col-md-12 col-lg-12">Our Location</h2>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3553.1309560418995!2d31.00197187346236!3d30.826291969419994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7c9006c953031%3A0x657b1b2e39db545b!2sITI%20Tanta!5e0!3m2!1sar!2seg!4v1735508989730!5m2!1sar!2seg" width="400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

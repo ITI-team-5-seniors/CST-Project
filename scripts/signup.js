@@ -99,8 +99,9 @@ $(function () {
       displayMessage('Email already exists. Please choose another one.');
     } else {
       // Encrypt password
-      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+      const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
 
+      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
       const newSeller = { username, email, encryptedPassword, role };
       sellers.push(newSeller);
       localStorage.setItem('sellers', JSON.stringify(sellers));
