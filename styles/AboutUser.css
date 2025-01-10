@@ -10,19 +10,25 @@
     padding: 20px;
     box-shadow: 0px 0px 10px rgb(118, 112, 226);
     height: auto;
-
+  align-items: center;
+  
     background-color: white;
 }
 
-button{
+#save-picture{
     background-color: blue;
     border: 1px solid #3498db;
-    border-radius: 10px;
+    border-radius: 50px;
     color: white;
     width: 100px;
-    height: 20px;
+    height: 40px;
     padding-left: 2px;
     
+}body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 200px;
 }
 .customer-picture{
     width: 100px;
@@ -49,19 +55,6 @@ button{
 .order-list li:last-child {
     border-bottom: none;
 }
-
-footer{
-    background-color: rgb(0, 0, 0);
-    width: 100%;
-    height: 100px;
-    text-align: center;
-    color: white;
-}
-
-.foot i{
-      margin-top: 20px;
-      margin-right: 2px;
-      }
 
       /* welcome text styling*/ 
       .welcome-text {
@@ -101,3 +94,74 @@ footer{
 
 
 /* header styling*/
+
+
+#icons a, .dropdown {
+    display: flex;
+    align-items: center; 
+   }
+   
+   
+   #logo img {
+       max-width: 100%;
+       height: auto;
+   }
+   
+   .navbar-nav .nav-link {
+       padding: 0 20px; 
+   }
+   
+   #search input[type="search"] {
+       width: 300px;
+       padding: 5px 10px;
+       border-radius: 5px;
+       border: 1px solid #ccc;
+   }
+   
+   #search-results {
+       max-height: 300px;
+       overflow-y: auto;
+       background-color: white;
+       border: 1px solid #ddd;
+       border-radius: 4px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+       padding: 0;
+       list-style-type: none;
+       margin: 0;
+       z-index: 1000;
+   }
+   
+   #search-results .list-group-item {
+       cursor: pointer;
+   }
+   
+   #search-results .list-group-item:hover {
+       background-color: #f8f9fa;
+   }
+   
+   #login {
+       display: none;
+   }
+   
+   @media (max-width: 768px) {
+   .dropdown, .d-flex, #icons {
+   display: none !important
+   }
+   #login {
+   display: block;
+   }
+   }
+  
+ /* Footer Styling */
+footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;  /* This will push footer to the bottom */
+    width: 100%;
+}
+
+footer .foot i {
+    margin-right: 10px;
+}
