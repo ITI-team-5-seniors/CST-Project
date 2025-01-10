@@ -9,7 +9,7 @@
 body {
   overflow-x: hidden;
   display: flex;
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 100px;
   flex-direction: column;
   height: 100vh;
