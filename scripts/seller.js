@@ -1,77 +1,94 @@
-// script/seller.js
-import {getorders , initializeData, getProducts, addProduct, updateProduct, deleteProduct } from './utils.js';
+import { initializeData, getProducts, addProduct, updateProduct, deleteProduct } from './utils.js';
 
-const renderProducts = () => {
+// Get the current seller's products
+const getSellerProducts = () => {
     const products = getProducts();
+    const currentSeller = localStorage.getItem('currentSeller');
+    return products.filter(product => product.sellerName === currentSeller);
+};
+
+// Render products table for the current seller
+const renderSellerProducts = () => {
+    const products = getSellerProducts();
     const tableBody = document.getElementById('products-table-body');
-    tableBody.innerHTML = products.map(product => `
+
+    // Clear table content
+    tableBody.innerHTML = '';
+
+    // Display a message if no products are found
+    if (products.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="7">No products found. Add some to start!</td></tr>';
+        return;
+    }
+
+    // Populate table with seller's products
+    tableBody.innerHTML = products.map((product, index) => `
         <tr>
             <td>${product.id}</td>
             <td>${product.name}</td>
             <td>${product.price}</td>
             <td>${product.stock}</td>
             <td>${product.type}</td>
-            <td><img src="${product.image}" width="50" height="50"></td>
+            <td><img src="${product.image || 'placeholder.jpg'}" width="50" height="50"></td>
             <td>
-                <button class="delete-btn" data-id="${product.id}">Delete</button>
-                <button class="update-btn" data-id="${product.id}">Update</button>
+                <button class="delete-btn" data-id="${index}">Delete</button>
+                <button class="update-btn" data-id="${index}">Update</button>
             </td> 
         </tr>
     `).join('');
 
-
+    // Add event listeners for delete and update actions
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            const id = e.target.getAttribute('data-id');
-            deleteProductHandler(id);
+            const index = e.target.getAttribute('data-id');
+            handleDelete(index);
         });
     });
 
     document.querySelectorAll('.update-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            const id = e.target.getAttribute('data-id');
-            updateProductHandler(id);
+            const index = e.target.getAttribute('data-id');
+            handleEdit(index);
         });
     });
 };
 
+// Handle product deletion
+const handleDelete = (index) => {
+    const sellerProducts = getSellerProducts();
+    const product = sellerProducts[index];
 
-const deleteProductHandler = (id) => {
-    deleteProduct(id);
-    console.log('Product Deleted, New Product List:',products);
-    console.log('Product Deleted, New Product List:',  (id));
-    renderProducts();  
-
+    if (product && confirm(`Are you sure you want to delete "${product.name}"?`)) {
+        deleteProduct(product.id);
+        renderSellerProducts();
+    }
 };
 
+// Handle product editing
+const handleEdit = (index) => {
+    const sellerProducts = getSellerProducts();
+    const product = sellerProducts[index];
 
-const updateProductHandler = (id) => {
-    const product = getProducts().find(product => product.id === id);
     if (product) {
         document.getElementById('name').value = product.name;
         document.getElementById('price').value = product.price;
         document.getElementById('stock').value = product.stock;
         document.getElementById('type').value = product.type;
-        document.getElementById('image').dataset.editId = id;
+        document.getElementById('image').dataset.editId = product.id;
         document.getElementById('submit').textContent = 'Update Product';
-     
-        scroll({
-            top:1000
-        })
- 
-        
+
+        scroll({ top: 1000 });
     }
 };
 
-
+// Handle form submission for adding/updating products
 document.getElementById('product-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const price = parseFloat(document.getElementById('price').value);
     const stock = parseInt(document.getElementById('stock').value);
-    const type = document.getElementById('type').value;  
+    const type = document.getElementById('type').value;
     const image = document.getElementById('image').files[0];
-
     const imageUrl = image ? URL.createObjectURL(image) : null;
     const id = document.getElementById('image').dataset.editId;
 
@@ -79,180 +96,46 @@ document.getElementById('product-form').addEventListener('submit', (e) => {
         updateProduct(id, { name, price, stock, type, ...(imageUrl && { image: imageUrl }) });
         delete document.getElementById('image').dataset.editId;
     } else {
-        addProduct({ name, price, stock, type, image: imageUrl });
+        const currentSeller = localStorage.getItem('currentSeller');
+        addProduct({ name, price, stock, type, image: imageUrl, sellerName: currentSeller });
     }
 
-    renderProducts(); 
-    document.getElementById('product-form').reset(); 
-    document.getElementById('submit').textContent = 'Add Product'; 
+    renderSellerProducts();
+    document.getElementById('product-form').reset();
+    document.getElementById('submit').textContent = 'Add Product';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    initializeData();
-    renderProducts();
-    displayOrders() ;
-    getOrdersFromLocalStorage()
-    getorders();
-   
-});
-
-
-function getOrdersFromLocalStorage() {
-    let orders = JSON.parse(localStorage.getItem('orders')) || [];
-    return orders;
-  }
-
-
-  function displayOrders() {
-    let orders = JSON.parse(localStorage.getItem('orders')) || [];
-    let products = JSON.parse(localStorage.getItem('products')) || [];
-  
-    let tableBody = document.getElementById('orders-table-body');
-    tableBody.innerHTML = '';
-
-    orders.forEach(order => {
-        order.products.forEach(product => {
-            let orderRow = document.createElement('tr');
-            let productDetails = products.find(p => p.id === product.productId);
-            
-            orderRow.innerHTML = `
-                <td>${order.user}</td>
-                <td>${new Date(order.date).toLocaleDateString()}</td>
-                <td>${productDetails.id}</td>
-                <td>${productDetails.name}</td>
-                <td>${productDetails.price}$</td>
-                <td><img src="${productDetails.image}" width="50" height="50"></td>
-                <td>${product.quantity}</td>
-                <td>pending</td>
-            `;
-            
-            tableBody.appendChild(orderRow);
-        });
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//chart
-const ctx = document.getElementById('myChart');
-
-// الحصول على الـ orders و الـ products
-let orders = JSON.parse(localStorage.getItem('orders')) || [];
-let products = JSON.parse(localStorage.getItem('products')) || [];
-
-// حساب عدد المبيعات لكل منتج
-  const productSales = products.map(product => {
-    const totalSales = orders.reduce((acc, order) => {
-        order.products.forEach(orderProduct => {
-            if (orderProduct.productId === product.id) {
-                acc += orderProduct.quantity;
-            }
-        });
-        return acc;
-    }, 0);
+    const selectElement = document.getElementById('type');
     
-    return {
-        name: product.name,
-        price: product.price,
-        sales: totalSales
-    };
+    // Get products from localStorage
+    const products = JSON.parse(localStorage.getItem('products') || '[]');
+    
+    // Extract unique types using Set
+    const uniqueTypes = [...new Set(products.map(product => product.type))];
+    
+    // Sort types alphabetically
+    uniqueTypes.sort();
+    
+    // Clear existing options
+    selectElement.innerHTML = '';
+    
+    // Add default "All Types" option if needed
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'All Types';
+    selectElement.appendChild(defaultOption);
+    
+    // Add options for each unique type
+    uniqueTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        selectElement.appendChild(option);
+    });
 });
-
-// إعداد البيانات للـ chart
-const chartData = {
-    labels: productSales.map(product => `${product.name} - $${product.price}`),  // أسماء المنتجات مع أسعارها
-    datasets: [{
-        label: 'Sales Analysis',
-        data: productSales.map(product => product.sales),  // عدد المبيعات
-        backgroundColor: '#800080',
-        borderColor: '#800080',
-        borderWidth: 1
-    }]
-};
-
-// إعداد الخيارات للـ chart
-const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-        y: {
-            beginAtZero: true,
-            grid: {
-                color: '#444'
-            },
-            ticks: {
-                color: 'white'
-            }
-        },
-        x: {
-            grid: {
-                color: '#444'
-            },
-            ticks: {
-                color: 'white'
-            }
-        }
-    },
-    plugins: {
-        legend: {
-            labels: {
-                color: 'white'
-            }
-        }
-    }
-};
-
-// إنشاء الـ chart
-new Chart(ctx, {
-    type: 'bar',
-    data: chartData,
-    options: chartOptions
+// Initialize the seller's page
+document.addEventListener('DOMContentLoaded', () => {
+    initializeData();
+    renderSellerProducts();
 });
-
-// const arr=JSON.parse(localStorage.getItem('products'));
-// console.log(arr);
-
-// const orders=JSON.parse(localStorage.getItem('orders'));
-// console.log(orders);
-// orders.forEach(order => {
-//     console.log('Order Details:', order);
-//     console.log('User:', order.user);
-//     console.log('Products:', order.products);
-//     console.log('Amount:', order.amount);
-//     console.log('Date:', order.date);
-
-
-//     if (Array.isArray(order.products)) {
-//         order.products.forEach(product => {
-//             console.log('Product ID:', product.productId);
-//             console.log('Quantity:', product.quantity);
-//         });
-//     } else {
-//         console.log('No products available for this order.');
-//     }
-
-// });
-
-
-
- 
