@@ -24,7 +24,6 @@ $(function () {
             orderList.append(listItem);
         }
     });
-
     // Logic for uploading image
     $("#image-upload").on("change", function (e) {
         const file = e.target.files[0];
@@ -38,7 +37,6 @@ $(function () {
             $("#image-upload-label").text(fileName);
         }
     });
-
     // Save the uploaded image in localStorage
     $("#save-picture").on("click", function () {
         const imageSrc = $("#customer-picture").prop("src");
@@ -51,4 +49,4 @@ $(function () {
     });
   
     
-});
+});scripts/AboutUser.js

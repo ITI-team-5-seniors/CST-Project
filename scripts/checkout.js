@@ -59,24 +59,24 @@ $(function () {
       $('#message').css({ display: 'flex', height: '200px' });
       
       checkout(currentUserName)
-      // order = {
-      //   user: currentUserName,
-      //   products: cartProducts,
-      //   amount: amount,
-      //   date: orderDate,
-      // };
-      // orders.push(order);
+      order = {
+        user: currentUserName,
+        products: cartProducts,
+        amount: amount,
+        date: orderDate,
+      };
+      orders.push(order);
 
-      // cartProducts.forEach((soldProduct) => {
-      //   updateProduct(soldProduct['productId'], 'stock'-=soldProduct['quantity'])
-        // let stockProduct = getProductById(soldProduct['productId']);
-        // stockProduct.stock -= soldProduct['quantity'];
-        // localStorage.setItem('products', JSON.stringify(allProducts));
-      // });
+      cartProducts.forEach((soldProduct) => {
+        updateProduct(soldProduct['productId'], 'stock'-=soldProduct['quantity'])
+        let stockProduct = getProductById(soldProduct['productId']);
+        stockProduct.stock -= soldProduct['quantity'];
+        localStorage.setItem('products', JSON.stringify(allProducts));
+      });
 
-      // carts[currentUserName] = [];
-      // localStorage.setItem('carts', JSON.stringify(carts));
-      // localStorage.setItem('orders', JSON.stringify(orders));
+      carts[currentUserName] = [];
+      localStorage.setItem('carts', JSON.stringify(carts));
+      localStorage.setItem('orders', JSON.stringify(orders));
       let params = new URLSearchParams(location.search);
   
       params.set('amount', 0);

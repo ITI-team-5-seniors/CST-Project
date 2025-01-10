@@ -134,6 +134,7 @@
 body {
 	overflow-x: hidden;
 	font-family: 'Times New Roman', Times, serif;
+	min-height: 100vh;
 }
 #icons a, .dropdown {
  display: flex;
@@ -178,13 +179,10 @@ body {
 	background-color: #f8f9fa;
 }
 
-#login {
-	display: none;
-}
-
+ 
 @media (max-width: 768px) {
 .dropdown, .d-flex, #icons {
-display: none !important
+display: none  !important
 }
 #login {
 display: block;

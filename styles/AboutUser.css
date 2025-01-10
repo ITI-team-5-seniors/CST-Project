@@ -2,9 +2,12 @@
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 
 }
+ body{
+    margin-top: 20px;
+ }
 .customer-card{
     max-width: 1000px;
-    margin: 3rem auto;
+    margin: 50px auto;
     border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
@@ -99,6 +102,7 @@
 #icons a, .dropdown {
     display: flex;
     align-items: center; 
+    color: black;
    }
    
    

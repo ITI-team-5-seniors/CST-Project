@@ -12,11 +12,20 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <link rel="stylesheet" href="../styles/cart.css" />
     <script src="../scripts/jq-3-7-1.js"></script>
     <script src="../scripts/cart.js" type="module"></script>
     <script type="module" src="../scripts/search.js"></script>
-
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
     <style>
       #info,#danger {
         display: none;
@@ -32,43 +41,94 @@
     </style>
   </head>
   <body>
-    <div class="alert alert-info" id="info" role="alert">
-      Please login to use the cart
-      <a href="login.html" class="alert-link">Login</a>
-    </div>
+    <header class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+      <div class="container">
+          <a class="navbar-brand" href="#">
+              <img src="../Photos/logo.png" alt="logo" style="width: 90px;">
+          </a>
 
-    <div class="alert alert-danger" id="danger" role="alert">
-      Product out of stock
-    </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav gap-md-3">
+                <li class="nav-item"><a class="nav-link text-center" href="./home.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-center" href="./Catagorie.html">Categories</a></li>
+                <li class="nav-item"><a class="nav-link text-center" href="./CONTACT_US.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link text-center" href="./login.html">Login</a></li>
+            </ul>
+        </div>
 
+          <div id="search" class="d-none d-md-block position-relative me-3">
+              <input type="search" id="navbarSearch" placeholder="What are you looking for?" class="form-control">
+              <ul id="search-results" class="list-group position-absolute w-100 mt-1" style="display: none; z-index: 1000;"></ul>
+          </div>
+
+          <div id="icons" class="d-flex align-items-center">
+              <a href="./cart.html" class="d-flex me-3">
+              <i class="fa-solid fa-cart-shopping icon"></i>
+              <div id="cart-count"></div>
+          </a>
+        
+              <div class="dropdown">
+                  <button class="btn dropdown-toggle text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa-regular fa-user"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                      <li><a class="dropdown-item" href="AboutUser.html">Profile</a></li>
+                      <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </header>
+  <div class="alert alert-info" id="info" role="alert">
+    Please login to use the cart
+    <a href="login.html" class="alert-link">Login</a>
+  </div>
+
+  <div class="alert alert-danger" id="danger" role="alert">
+    Product out of stock
+  </div>
+
+  <div
+    class="main-wrapper d-flex flex-column align-items-center flex-sm-row my-5 mx-auto col-11 col-md-10 col-lg-9 text-center"
+  >
     <div
-      class="main-wrapper d-flex flex-column align-items-center flex-sm-row my-5 mx-auto col-11 col-md-10 col-lg-9 text-center"
+      class="cart col-10 col-sm-9 p-1 p-sm-2 bg-gradient bg-light bg-opacity-50 rounded-2"
     >
-      <div
-        class="cart col-10 col-sm-9 p-1 p-sm-2 bg-gradient bg-light bg-opacity-50 rounded-2"
-      >
-        <h2 class="text-primary mt-2">Shopping Cart</h2>
-        <div class="container mt-3" id="product-list"></div>
-        <a id="go-shopping" class="icon-link mb-3" href="#">
-          <span>&#8592;</span> Go shopping
-        </a>
-      </div>
-      <div
-        class="summary col-10 col-sm-3 align-self-sm-stretch d-flex flex-column justify-content-evenly align-items-center p-3 bg-primary bg-gradient bg-opacity-100 px-4 p-sm-2 rounded-2 shadow-lg"
-      >
-        <h2 class="text-light mt-3 mt-sm-0 fw-bolder">Summary</h2>
-        <div class="subtotal"></div>
-        <h3 class="text-light mt-3 fw-bolder">
-          Total : <span class="fw-bolder" id="total"> </span>
-        </h3>
-        <input
-          class="form-control pb-4 mb-3 fw-bolder"
-          type="button"
-          name="checkout"
-          id="checkout-btn"
-          value="Proceed to checkout"
-        />
-      </div>
+      <h2 class="text-primary mt-2">Shopping Cart</h2>
+      <div class="container mt-3" id="product-list"></div>
+      <a id="go-shopping" class="icon-link mb-3" href="#">
+        <span>&#8592;</span> Go shopping
+      </a>
     </div>
+    <div
+      class="summary col-10 col-sm-3 align-self-sm-stretch d-flex flex-column justify-content-evenly align-items-center p-3 bg-primary bg-gradient bg-opacity-100 px-4 p-sm-2 rounded-2 shadow-lg"
+    >
+      <h2 class="text-light mt-3 mt-sm-0 fw-bolder">Summary</h2>
+      <div class="subtotal"></div>
+      <h3 class="text-light mt-3 fw-bolder">
+        Total : <span class="fw-bolder" id="total"> </span>
+      </h3>
+      <input
+        class="form-control pb-4 mb-3 fw-bolder"
+        type="button"
+        name="checkout"
+        id="checkout-btn"
+        value="Proceed to checkout"
+      />
+    </div>
+  </div>
+  <footer>
+    <p class="foot">
+      <i class="fa-brands fa-twitter"></i>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-github"></i>
+      <i class="fa-brands fa-google"></i>
+  </p>
+  <p>Copy Right 2024 &copy; By <span style="color: rgb(15, 72, 196);">Theme-fair</span> All Rights Reserved</p>
+  </footer>
+
   </body>
 </html>

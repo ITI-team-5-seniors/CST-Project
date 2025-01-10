@@ -23,7 +23,7 @@
     <script type="module" src="../scripts/search.js"></script>
 
     <style>
-      img {
+      #productimage {
         height: 250px;
       }
       #success,
@@ -50,13 +50,16 @@
         </button>
 
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav gap-md-3">
-                <li class="nav-item"><a class="nav-link text-center" href="./home.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-center" href="./Catagorie.html">Categories</a></li>
-                <li class="nav-item"><a class="nav-link text-center" href="./CONTACT_US.html">Contact</a></li>
-                <li class="nav-item"><a class="nav-link text-center" href="./login.html" id="login">Login</a></li>
-            </ul>
-        </div>
+          <ul class="navbar-nav gap-md-3">
+              <li class="nav-item"><a class="nav-link text-center" href="./home.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link text-center" href="./Catagorie.html">Categories</a></li>
+              <li class="nav-item"><a class="nav-link text-center" href="./CONTACT_US.html">Contact</a></li>
+              <li class="nav-item"><a class="nav-link text-center" href="./login.html" id="login">Login</a></li>
+              <li class="nav-item"><a class="nav-link text-center" href="./cart.html" id="login">Cart</a></li>
+
+          </ul>
+      </div>
+
 
         <div id="search" class="d-none d-md-block position-relative me-3">
             <input type="search" id="navbarSearch" placeholder="What are you looking for?" class="form-control">
@@ -66,7 +69,7 @@
         <div id="icons" class="d-flex align-items-center">
             <a href="./cart.html" class="d-flex me-3">
             <i class="fa-solid fa-cart-shopping icon"></i>
-            <div id="cart-count">0</div>
+            <div id="cart-count"></div>
         </a>
       
           <div class="dropdown">
@@ -96,7 +99,15 @@
 
       <div id="product-list" class="row g-4"></div>
     </div>
-    
+    <footer>
+      <p class="foot">
+        <i class="fa-brands fa-twitter"></i>
+        <i class="fa-brands fa-facebook"></i>
+        <i class="fa-brands fa-github"></i>
+        <i class="fa-brands fa-google"></i>
+    </p>
+    <p>Copy Right 2024 &copy; By <span style="color: rgb(15, 72, 196);">Theme-fair</span> All Rights Reserved</p>
+    </footer>
 
     <script type="module">
       import {
@@ -145,7 +156,7 @@
                             <div class="card clickable-card" data-id="${
                               product.id
                             }">
-                                <img src="${
+                                <img id="productimage"src="${
                                   product.image
                                 }" class="card-img-top" alt="${
                 product.name
