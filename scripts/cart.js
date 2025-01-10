@@ -57,7 +57,7 @@ function drawProductItem() {
               <h6 class="item-name col-3 mx-2">${productData['name']}</h6>
             <div class="controls col-3 d-sm-flex justify-content-center">
               <input
-                class="bg-primary border-0 rounded px-2"
+                class="bg-primary border-0 rounded"
                 id="increment"
                 type="button"
                 value="+"
@@ -71,7 +71,7 @@ function drawProductItem() {
                 />
                 </div>
                 <h6 class="col-2 item-price">${productData['price']}$</h6>
-            <i id="carticons"
+            <i
             class="delete-icon col-1 m-2 bi bi-trash3-fill pointer-event"
             ></i>
             </div>
