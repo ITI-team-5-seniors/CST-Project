@@ -270,11 +270,7 @@ document.getElementById('category-form').addEventListener('submit', function (e)
     let products = JSON.parse(localStorage.getItem('products')) || [];
     categories.push(newCategory);
     localStorage.setItem('categories', JSON.stringify(categories));
-    products.forEach(product => {
-        if (product.type === "Uncategorized") {  
-            product.type = type;
-        }
-    });
+    products.push(newCategory);
     localStorage.setItem('products', JSON.stringify(products));
     document.getElementById('type').value = '';
     document.getElementById('typeimage').value = '';
@@ -284,7 +280,49 @@ document.getElementById('category-form').addEventListener('submit', function (e)
         });
 
     });
+    
+ // from contsct page
+$(function (){
+    let messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
 
+    let messageTableBody = document.getElementById('customer-messages-body');
+
+    if (messages.length === 0) {
+        messageTableBody.innerHTML = "<tr><td colspan='5'>No messages found.</td></tr>";
+    } else {
+        messages.forEach((msg, index) => {
+            let row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${msg.name}</td>
+                <td>${msg.email}</td>
+                <td>${msg.message}</td>
+                <td>${msg.timestamp ? new Date(msg.timestamp).toLocaleString() : 'N/A'}</td>
+            <td><button class="btn btn-danger delete-btn" data-index="${index}">Delete</button></td>
+
+            `;
+            
+            messageTableBody.appendChild(row);
+        });
+
+    // Attach delete event listeners
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            let index = this.getAttribute('data-index');
+            deleteMessage(index);
+        });
+    });
+ 
+
+function deleteMessage(index) {
+    let messages = JSON.parse(localStorage.getItem('contactMessages')) || [];
+        messages.splice(index, 1);
+        localStorage.setItem('contactMessages', JSON.stringify(messages));
+    location.reload(); 
+}
+    }
+});
 
     displayUsers();
     displaySellers();
