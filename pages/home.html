@@ -11,11 +11,12 @@
     <script src="../scripts/script.js"></script>
     <script type="module" src="../scripts/productLogic.js"></script>
     <script type="module" src="../scripts/search.js"></script>
+    <script src="../scripts/logout_logic.js"></script>
     <style>
         body {
             overflow-x: hidden;
-            font-family: 'Times New Roman', Times, serif;
-        }
+            font-family: "Helvetica", Arial, sans-serif;
+          }
         #icons a {
         display: flex;
         align-items: center; 
@@ -104,7 +105,7 @@
                   <li class="nav-item"><a class="nav-link text-center" href="#">Home</a></li>
                   <li class="nav-item"><a class="nav-link text-center" href="./Catagorie.html">Categories</a></li>
                   <li class="nav-item"><a class="nav-link text-center" href="./CONTACT_US.html">Contact</a></li>
-                  <li class="nav-item"><a class="nav-link text-center" href="../pages/login.html" id="login">Login</a></li>
+                  <li class="nav-item"><a class="nav-link text-center" href="./login.html">Login</a></li>
               </ul>
           </div>
 
@@ -116,7 +117,7 @@
           <div id="icons" class="d-flex align-items-center icon">
               <a href="./cart.html" class="d-flex me-1">
               <i class="fa-solid fa-cart-shopping icon icon"></i>
-              <div id="cart-count"><span style="color:rgb(184, 9, 9)">0 </span></div>
+              <div id="cart-count"></div>
           </a>
            <!-- <div> <a href="#"><i class="fa-regular fa-user icon"></i></a></div> -->
           <div class="dropdown"  >
@@ -125,7 +126,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end "  aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="AboutUser.html">Profile</a></li>
-                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                <li><a class="dropdown-item" href=""><button onclick="logout()" style="border: none ;">Logout</button></a></li>
             </ul>
         </div>
 
