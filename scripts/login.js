@@ -46,42 +46,63 @@ $(function () {
 
   function authenticateUser(email, password) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
+    const sellers = JSON.parse(localStorage.getItem('sellers')) || []; // Added to check sellers
     console.log("Users in localStorage:", users);
-
+    console.log("Sellers in localStorage:", sellers); // Debug to ensure we have the sellers
+  
+    // Check for regular users first
     const userFound = users.some((user) => {
       const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
       const bytes = CryptoJS.AES.decrypt(user.encryptedPassword, key);
       const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-
+  
       if (user.email.toLowerCase() === email.toLowerCase() && decryptedPassword === password) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         const userRole = user.role;
+  
         if (userRole === 'admin') {
           window.location = 'admindashboard.html';
         } else if (userRole === 'seller') {
-          window.location = 'seller.html';
+          window.location = 'seller.html';  // Redirect to seller page
         } else {
-          window.location = 'home.html';
+          window.location = 'home.html';  // Redirect to home page for regular users
         }
         return true;
       }
       return false;
     });
-
+  
+    // Check for sellers
     if (!userFound) {
-      displayMessage('Incorrect email or password.');
-      setTimeout(() => {
-        let reset = confirm('Do you want to reset your password?');
-        if (reset) {
-          if (emailExists(email)) {
-            sentRestRequesttoadmin(email);
-          } else {
-            alert("Email does not exist in the system.");
-          }
+      const sellerFound = sellers.some((seller) => {
+        const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
+        const bytes = CryptoJS.AES.decrypt(seller.encryptedPassword, key);
+        const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+  
+        if (seller.email.toLowerCase() === email.toLowerCase() && decryptedPassword === password) {
+          localStorage.setItem('currentUser', JSON.stringify(seller));
+          window.location = 'seller.html';  // Redirect to seller page
+          return true;
         }
-      }, 500);
+        return false;
+      });
+  
+      if (!sellerFound) {
+        displayMessage('Incorrect email or password.');
+        setTimeout(() => {
+          let reset = confirm('Do you want to reset your password?');
+          if (reset) {
+            if (emailExists(email)) {
+              sentRestRequesttoadmin(email);
+            } else {
+              alert("Email does not exist in the system.");
+            }
+          }
+        }, 500);
+      }
     }
   }
+  
 
   function emailExists(email) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -91,16 +112,20 @@ $(function () {
   function sentRestRequesttoadmin(email) {
     const requestpass = JSON.parse(localStorage.getItem('requestpass')) || [];
     const existingRequest = requestpass.find(request => request.email === email);
+
     if (existingRequest) {
       alert('You already have a pending reset request.');
       return;
     }
+
     const requestId = requestpass.length + 1;
     const requestTime = new Date().toLocaleString();
     const newRequest = { id: requestId, email: email, time: requestTime };
+
     requestpass.push(newRequest);
     localStorage.setItem('requestpass', JSON.stringify(requestpass));
+
     alert('Reset password request has been sent to admin.');
-    startPollingForResetapproval(email);
+    startPollingForResetapproval(email); // Start polling for reset approval
   }
 });

@@ -147,6 +147,33 @@
     <p>Copy Right 2024 &copy; By <span style="color: rgb(15, 72, 196);">Theme-fair</span> All Rights Reserved</p>
     </footer>
 
+    <script defer>
+        // Function to dynamically update categories
+        function updateCategories() {
+            const categories = JSON.parse(localStorage.getItem('categories')) || [];
+            console.log(categories); // For debugging purposes
+            const categoriesContainer = document.getElementById('categories-dynamic');
+            categoriesContainer.innerHTML = '';  
+            categories.forEach(category => {
+                const card = `
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card">
+                            <div class="card-img-container">
+                                <img class="card-img-top" src="${category.typeimage}" alt="${category.type}">
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title">${category.type}</h1>
+                                <a href="./Product_Listing.html?type=${category.type}" class="btn">See More</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                categoriesContainer.innerHTML += card;
+            });
+        }
 
+        // Ensure the function runs after the page is fully loaded
+        document.addEventListener('DOMContentLoaded', updateCategories);
+    </script>
 </body>
 </html>
