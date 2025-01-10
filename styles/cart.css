@@ -1,99 +1,99 @@
-*{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  padding: 0;
+/* General Reset */
+* {
+  font-family: "Helvetica", Arial, sans-serif;
   margin: 0;
-}
-body
-{
-  overflow-x: hidden;
-
-  padding-top: 80px;
-}
-h4 {
-  font-size: calc(1vw + 0.5rem) ;
-  margin-top: 25px;
-}
-h3 {
-  font-size: calc(1vw + 0.7rem) ;
-  margin-bottom: 25px;
-}
-h6 {
-  font-size: calc(1vw + 0.5rem);
-
-}
-input {
-  font-size: calc(1vw + 0.5rem);
-  margin-bottom: 5px;
-}
-.cart:hover{
-  background-color: black !important;
-  transform: scale(1.1);
-  transition: 0.5s;
-  color: white;
-}
-img:hover{
-    transform: scale(1.2);
-    transition: 0.5s;
-    box-shadow: rgb(101, 101, 154) 2px 2px 4px;
-
-}
-#cartsicons:hover{
-  cursor: pointer;
-  transform: scale(1.5);
-  transition: 1s;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#go-shopping{
-  color: rgb(34, 34, 208);
-  text-decoration: none;
-  font-size: calc(1.5vw + 0.5rem);
-  
-}
-#go-shopping:hover {
-  transform: translateX(-15px) scale(1.2);
-  transition: 0.5s;
-  color: white;
-}
-.summary:hover {
-  background-color:rgb(34, 34, 208)!important;
-  transform: scale(1.1);
-  transition: 0.5s;
-  color: white;
-}
-#checkout-btn {
-  height: calc(2vw + 1rem);
-  font-size: calc(0.5vw + 0.5rem);
-}
-#checkout-btn:hover, #checkout-btn:disabled {
-  background-color:white;
-  color: black;
-  transition: 0.5s;
-}
-/* header styling */
-  #icons a, .dropdown {
+html, body {
+  height: 100%;  
   display: flex;
-  align-items: center; 
-  }
-  
-  
-  #logo img {
+  flex-direction: column;  
+  overflow-x: hidden; 
+  font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+  padding-top: 100px; /* Account for fixed header */
+}
+
+/* Card Styles */
+.card {
+  max-width: 500px;
+  width: 90%;
+  margin: auto; /* Center the card */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #2c0aee;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #589de7;
+}
+
+.error-massage {
+  color: rgb(255, 51, 5);
+  font-size: 12px;
+  display: none;
+}
+
+/* Header Styles */
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
   max-width: 100%;
   height: auto;
-  }
-  
-  .navbar-nav .nav-link {
-  padding: 0 20px; 
-  }
- 
-  
-  #search input[type="search"] {
+}
+
+.navbar-nav .nav-link {
+  padding: 0 20px;
+}
+
+#search input[type="search"] {
   width: 300px;
   padding: 5px 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  }
-  
-  #search-results {
+}
+
+#search-results {
   max-height: 300px;
   overflow-y: auto;
   background-color: white;
@@ -104,37 +104,54 @@ img:hover{
   list-style-type: none;
   margin: 0;
   z-index: 1000;
-  }
-  
-  #search-results .list-group-item {
+}
+
+#search-results .list-group-item {
   cursor: pointer;
-  }
-  
-  #search-results .list-group-item:hover {
+}
+
+#search-results .list-group-item:hover {
   background-color: #f8f9fa;
+}
+
+#icons a, .dropdown {
+  display: flex;
+  align-items: center;
+}
+
+#login {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dropdown, d-flex, #icons {
+      display: none !important;
   }
-  
-  
-  
-  @media (max-width: 768px) {
-    #icons {
-  display: none !important 
+  #login {
+      display: block;
   }
- 
-  }
-  
-  
-  /*footer style*/
-  footer{
-  background-color: rgb(0, 0, 0);
-  width: 100vw;
-  height: 100px;
+}
+
+/* Footer Styles */
+footer {
+  margin-top: auto; /* Push footer to the bottom */
   text-align: center;
+  padding: 10px 20px;
+  background-color: black;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+  color:white;
+}
+
+footer .foot i {
+  margin: 0 5px;
   color: white;
-  }
-  
-  .foot i{
-  margin-top: 20px;
-  margin-right: 2px;
-  
-  }
+  transition: color 0.3s ease;
+}
+
+footer .foot i:hover {
+  color: #2c0aee;
+}
