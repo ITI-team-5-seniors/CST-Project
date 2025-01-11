@@ -218,9 +218,9 @@ h2{
   .maincard p{
       display: none;
   }
-  .dropdown, .d-flex, #icons ,#search{
+  /* .dropdown, .d-flex, #icons ,#search{
       display: none !important
-  }
+  } */
  
   #login{
       display: block !important;
