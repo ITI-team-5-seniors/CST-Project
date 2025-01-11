@@ -56,7 +56,8 @@ $(function () {
     } else if ($('#cvv').val().length < 3) {
       displayMessage('Card validation value must be 3 digits');
     } else {
-      $('#message').css({ display: 'flex', height: '200px' });
+      $('#alert-heading').text(`🎉 congratulation ${currentUserName}  🎉`)
+      $('#message').css({ display: 'flex' });
       
       checkout(currentUserName)
       // order = {
