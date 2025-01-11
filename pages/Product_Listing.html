@@ -69,7 +69,7 @@
         <div id="icons" class="d-flex align-items-center">
             <a href="./cart.html" class="d-flex me-3">
             <i class="fa-solid fa-cart-shopping icon"></i>
-            <div id="cart-count"></div>
+            <div id="cart-count">0</div>
         </a>
       
           <div class="dropdown">
@@ -113,16 +113,19 @@
         initializeData,
         getProducts,
         addToCart,
+        getCart
       } from '../scripts/productLogic.js';
 
+      
+      
       function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
       }
-
+      
       $(document).ready(() => {
         const productType = getQueryParam('type'); // Retrieve query parameters ex: ?type=laptop
-
+        
         // initializeData()
         //   .then(() => {
             const products = getProducts();
@@ -192,6 +195,9 @@
                 // );
                 // if (currentUser) {
                   addToCart( product.id, 1);
+                  let cart = getCart()
+                   $('#cart-count').text(cart.length)
+
             //       $('#success').css({ display: 'block' });
             //       setTimeout(function () {
             //         $('#success').css({ display: 'none' });

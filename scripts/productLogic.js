@@ -130,11 +130,11 @@ const setCart = (products) => {
 const addToCart = (productId, quantity) => {
   let cart = getCart()
   if(cart){
-    console.log(cart)
-  let existingItem = cart.find(
+
+    let existingItem = cart.find(
       (item) => item.productId == productId
     );
-    console.log(existingItem)
+
     const stockProduct = getProductById(productId);
 
     if (existingItem) {
@@ -172,9 +172,9 @@ const addToCart = (productId, quantity) => {
 
 const removeFromCart = (productId) => {
   let cart = getCart();
-  console.log(cart)
+
   cart = cart.filter((item) => item.productId != productId);
-  console.log(cart)
+
   setCart(cart);
 };
 
