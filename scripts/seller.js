@@ -149,19 +149,34 @@ const renderOrders = () => {
         return;
     }
 
+    const products = JSON.parse(localStorage.getItem('products')) || [];
     // Populate table with orders
-    ordersTableBody.innerHTML = orders.map(order => `
-        <tr>
-            <td>${order.customerName}</td>
-            <td>${order.date}</td>
-            <td>${order.id}</td>
-            <td>${order.items/*.map(item => item.name).join(', ') || 'N/A'*/}</td>
-            <td>${order.total}</td>
-            <td><img src="${order.productImage || 'placeholder.jpg'}" width="50" height="50"></td>
-            <td>${order.items.map(item => item.quantity)}</td>
-            <td>${order.status}</td>
-        </tr>
-    `).join('');
+    ordersTableBody.innerHTML = orders.map((order, orderIndex) => 
+        Array.isArray(order.items) && order.items.length > 0
+            ? order.items
+                .map((item, itemIndex) => {
+                    const productInfo = products.find((p) => p.id === item.productId);
+                    return `
+                        <tr>
+                            <td>${orderIndex + 1}</td> 
+                            <td>${order.customerName}</td>
+                            <td>${order.date}</td>
+                            <td>${productInfo ? productInfo.name : `Unknown Product (ID: ${item.productId})`}</td> 
+                            <td>${order.total}</td>
+                            <td><img src="${order.productImage || 'placeholder.jpg'}" width="50" height="50"></td>
+                            <td>${item.quantity}</td>
+                            <td>${order.status}</td>
+                        </tr>
+                    `;
+                })
+                .join('')
+            : `
+                <tr>
+                    <td>${orderIndex + 1}</td> 
+                    <td colspan="7">No products found in this order.</td>
+                </tr>
+            `
+    ).join('');
 };
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('myChart').getContext('2d');
