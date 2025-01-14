@@ -17,14 +17,14 @@ $(function () {
     });
 
     if (validateForm(username, email, password, role)) {
-      if (role === 'admin') {
-        displayMessage('Admin role cannot be added via sign-up.');
-      } else if (role === 'seller') {
-        addSeller(username, email, password, role); // Seller
-      } else {
+      // if (role === 'admin') {
+      //   displayMessage('Admin role cannot be added via sign-up.');
+      // } else if (role === 'seller') {
+      //   addSeller(username, email, password, role); // Seller
+      // } else {
         addUser(username, email, password, role); // Regular user
         clearForm();
-      }
+      // }
     }
   });
 
@@ -78,24 +78,24 @@ $(function () {
     }
   }
 
-  function addSeller(username, email, password, role) {
-    const sellers = JSON.parse(localStorage.getItem('sellers')) || [];
-    const sellerExists = sellers.some((seller) => seller.username === username);
-    const emailExists = sellers.some((seller) => seller.email === email);
+  // function addSeller(username, email, password, role) {
+  //   const sellers = JSON.parse(localStorage.getItem('sellers')) || [];
+  //   const sellerExists = sellers.some((seller) => seller.username === username);
+  //   const emailExists = sellers.some((seller) => seller.email === email);
 
-    if (sellerExists) {
-      displayMessage('Username already exists. Please choose another one.');
-    } else if (emailExists) {
-      displayMessage('Email already exists. Please choose another one.');
-    } else {
-      const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
-      const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
-      const newSeller = { username, email, encryptedPassword, role };
-      sellers.push(newSeller);
-      localStorage.setItem('sellers', JSON.stringify(sellers));
-      displayMessage('Seller added successfully!');
-    }
-  }
+  //   if (sellerExists) {
+  //     displayMessage('Username already exists. Please choose another one.');
+  //   } else if (emailExists) {
+  //     displayMessage('Email already exists. Please choose another one.');
+  //   } else {
+  //     const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
+  //     const encryptedPassword = CryptoJS.AES.encrypt(password, key).toString();
+  //     const newSeller = { username, email, encryptedPassword, role };
+  //     sellers.push(newSeller);
+  //     localStorage.setItem('sellers', JSON.stringify(sellers));
+  //     displayMessage('Seller added successfully!');
+  //   }
+  // }
 
   function clearForm() {
     $('#username').val('');

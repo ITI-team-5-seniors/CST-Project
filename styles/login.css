@@ -120,9 +120,12 @@
 	position: absolute;
 	z-index: 2;
 }
+#login-form{
+	text-align: center;
+}
 
 #login-signup #chk:checked ~ .login {
-	transform: translateY(-500px);
+	transform: translateY(-480px);
 }
 #login-signup #chk:checked ~ .login label {
 	transform: scale(1);
