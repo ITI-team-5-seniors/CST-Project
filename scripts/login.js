@@ -3,10 +3,16 @@ function displayMessage(message) {
   $('#message').css({ display: 'block' });
 }
 
+
+
 $(function () {
   const adminEmail = 'admin@example.com';
   const adminPassword = 'admin123';
-
+  
+  $('body').on('click', function () {
+    $('#message').css({ display: 'none' });
+  });
+  
   const POLLING_INTERVAL = 2000; // Refresh every 2 seconds for approval from admin to solve the lag between user and admin page
 
   // Polling for reset approval from admin

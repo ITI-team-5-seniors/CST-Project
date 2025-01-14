@@ -101,6 +101,5 @@ $(function () {
     $('#username').val('');
     $('#email').val('');
     $('#password').val('');
-    $('#role').val('');
   }
 });
