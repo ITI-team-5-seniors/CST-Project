@@ -73,7 +73,13 @@ const handleEdit = (index) => {
         document.getElementById('name').value = product.name;
         document.getElementById('price').value = product.price;
         document.getElementById('stock').value = product.stock;
-        document.getElementById('type').value = product.type;
+        const typeSelect = document.getElementById('type');
+
+        typeSelect.addEventListener('change', () => {
+        const selectedValue = typeSelect.value;
+        console.log(selectedValue);
+        });
+
         document.getElementById('image').dataset.editId = product.id;
         document.getElementById('submit').textContent = 'Update Product';
 
@@ -130,8 +136,108 @@ document.addEventListener('DOMContentLoaded', () => {
         selectElement.appendChild(option);
     });
 });
-// Initialize the seller's page
+const renderOrders = () => {
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const ordersTableBody = document.getElementById('orders-table-body');
+
+    // Clear existing table rows
+    ordersTableBody.innerHTML = '';
+
+    // Check if there are no orders
+    if (orders.length === 0) {
+        ordersTableBody.innerHTML = '<tr><td colspan="8">No orders found.</td></tr>';
+        return;
+    }
+
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    // Populate table with orders
+    ordersTableBody.innerHTML = orders.map((order, orderIndex) => 
+        Array.isArray(order.items) && order.items.length > 0
+            ? order.items
+                .map((item, itemIndex) => {
+                    const productInfo = products.find((p) => p.id === item.productId);
+                    return `
+                        <tr>
+                            <td>${orderIndex + 1}</td> 
+                            <td>${order.customerName}</td>
+                            <td>${order.date}</td>
+                            <td>${productInfo ? productInfo.name : `Unknown Product (ID: ${item.productId})`}</td> 
+                            <td>${order.total}</td>
+                            <td><img src="${order.productImage || 'placeholder.jpg'}" width="50" height="50"></td>
+                            <td>${item.quantity}</td>
+                            <td>${order.status}</td>
+                        </tr>
+                    `;
+                })
+                .join('')
+            : `
+                <tr>
+                    <td>${orderIndex + 1}</td> 
+                    <td colspan="7">No products found in this order.</td>
+                </tr>
+            `
+    ).join('');
+};
 document.addEventListener('DOMContentLoaded', () => {
-    initializeData();
-    renderSellerProducts();
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    // Fetch orders from localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+    // Extract labels (e.g., product names) and data (e.g., total quantity)
+    const productNames = [];
+    const quantities = [];
+
+    orders.forEach(order => {
+        const index = productNames.indexOf(order.id);
+
+        if (index === -1) {
+            productNames.push(order.id);
+            quantities.push(order.total);
+        } else {
+            quantities[index] += order.total;
+        }
+    });
+
+    // Chart data
+    const data = {
+        labels: productNames,
+        datasets: [{
+            label: 'Total Orders',
+            data: quantities,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration
+    const config = {
+        type: 'bar', // You can change to 'line', 'pie', etc.
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Render chart
+    new Chart(ctx, config);
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeData(); 
+    renderSellerProducts();
+    renderOrders();
+});
+
