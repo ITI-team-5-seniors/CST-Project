@@ -86,6 +86,7 @@ $(function () {
             button.addEventListener("click", function () {
                 const requestId = button.getAttribute("data-id");
                 handleRequestAction(requestId, "approved");
+
             });
         });
 
@@ -104,7 +105,7 @@ $(function () {
             const users = JSON.parse(localStorage.getItem("users")) || [];
             const userIndex = users.findIndex((user) => user.email === request.email);
 
-            if (userIndex !== -1) {
+            if (userIndex !== -1 ) {
                 users[userIndex].resetApproved = true; // Mark the user for password reset
                 localStorage.setItem("users", JSON.stringify(users));
             }
@@ -116,6 +117,8 @@ $(function () {
 
         loadfromrequests();
         alert(`Request ID ${requestId} has been ${action}.`);
+        // users[userIndex].resetApproved = false;
+
     }
 
 

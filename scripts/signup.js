@@ -21,6 +21,7 @@ $(function () {
         displayMessage('Admin role cannot be added via sign-up.');
       } else if (role === 'seller') {
         addSeller(username, email, password, role); // Seller
+        clearForm();
       } else {
         addUser(username, email, password, role); // Regular user
         clearForm();
@@ -94,7 +95,9 @@ $(function () {
       sellers.push(newSeller);
       localStorage.setItem('sellers', JSON.stringify(sellers));
       displayMessage('Seller added successfully!');
+      
     }
+    clearForm() ;
   }
 
   function clearForm() {

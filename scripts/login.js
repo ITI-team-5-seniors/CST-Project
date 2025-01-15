@@ -11,22 +11,19 @@ $(function () {
 
   // Polling for reset approval from admin
   function startPollingForResetapproval(email) {
-    console.log("Polling started for email:", email);
-    const pollingInterval = setInterval(() => {  // Use setInterval for continuous polling
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-      const user = users.find((user) => user.email === email);
+    const pollingInterval = setInterval(() => {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find((user) => user.email === email);
 
-      if (user && user.resetApproved) {
-        clearInterval(pollingInterval);  // Stop polling after approval
-        console.log("Reset approved for user:", user);  // Debug log
-        alert('Password reset required. Redirecting to reset page...');
-        localStorage.setItem('currentResetUser', JSON.stringify(user));
-        window.location.href = 'reset-password.html';  // Redirect to reset password page
-      } else {
-        console.log('Waiting for admin approval.........');
-      }
-    }, POLLING_INTERVAL);
-  }
+        if (user && user.resetApproved) {
+            clearInterval(pollingInterval);  // Stop polling once approved
+            alert('Password reset required. Redirecting...');
+            localStorage.setItem('currentResetUser', JSON.stringify(user));
+            window.location.href = 'reset-password.html';  // Redirect to reset page
+        }
+    }, POLLING_INTERVAL);  
+}
+
 
   $('#login-form').on('submit', function (event) {
     event.preventDefault();
@@ -47,9 +44,7 @@ $(function () {
   function authenticateUser(email, password) {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const sellers = JSON.parse(localStorage.getItem('sellers')) || []; // Added to check sellers
-    console.log("Users in localStorage:", users);
-    console.log("Sellers in localStorage:", sellers); // Debug to ensure we have the sellers
-  
+
     // Check for regular users first
     const userFound = users.some((user) => {
       const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
