@@ -252,19 +252,21 @@ h2{
 
   }
   .card-body {
-      max-height: 100px; 
-      overflow: hidden; 
+      display: none;
 
   }
+  .card img{
+    width: 100%;
+  }
   .card-title{
-      font-size: smaller;
-      overflow: hidden; 
+      /* font-size: smaller;
+      overflow: hidden;  */
+      display: none;
   }
 
   /* trending */
-  .maincard{
-    width: auto;
-    height: auto;
+  .maincard .card-body {
+    display: none;
   }
 
   .card-img-top{
@@ -282,7 +284,8 @@ h2{
        
      }
      .feature h3 {
-        font-size: smaller;
+        /* font-size: smaller; */
+        display: none;
    
      
      }
@@ -336,7 +339,7 @@ h2{
       .hid{
           display: none !important;
       }
-      #view{
+      .card #view{
           font-size: 10px;
           display: block !important;
       }
