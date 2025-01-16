@@ -31,18 +31,42 @@ body {
     object-fit: cover;
     margin-bottom: 20px;
 }
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
-#welcome-text {
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #3498db, 0 0 20px #9b59b6;
+    }
+    100% {
+        text-shadow: 0 0 20px #e74c3c, 0 0 30px #f39c12;
+    }
+}
+
+
+.welcometext {
     font-size: 36px;
     color: #2c3e50;
     font-weight: bold;
     text-align: center;
-    padding: 20px;
+    padding: 30px;
+    /* transform: translateY(-50px); */
     background: linear-gradient(45deg, #3498db, #110f12);
     color: transparent;
     background-clip: text;
     animation: slideIn 1.5s ease-out, glow 1.5s infinite alternate;
     border-radius: 10px;
+    /* -webkit-background-clip: text;
+    -webkit-animation: slideIn 1.5s ease-out, glow 1.5s infinite alternate;
+    animation: slideIn 1.5s ease-out, glow 1.5s infinite alternate; */
 }
 
 #order-list {
@@ -111,23 +135,3 @@ footer .foot i {
     margin-right: 10px;
 }
 
-/* Keyframes for animations */
-@keyframes slideIn {
-    0% {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 10px #3498db, 0 0 20px #9b59b6;
-    }
-    100% {
-        text-shadow: 0 0 20px #e74c3c, 0 0 30px #f39c12;
-    }
-}

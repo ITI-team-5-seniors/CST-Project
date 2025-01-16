@@ -1,68 +1,74 @@
-$(function() {
-    document.getElementById('resetform').addEventListener('submit', function(e) {
-        e.preventDefault();
-  
+$(document).ready(function () {
+    const emailInput = $("#email");
+    const newPasswordInput = $("#newPassword");
+    const confirmPasswordInput = $("#confirmPassword");
+    const resetButton = $("#resetButton");
 
-        const newpass = document.getElementById('newpass').value;
-        const confpass = document.getElementById('conpass').value;
-        const newpasserror = document.getElementById('newpassError');
-        const conpasserror = document.getElementById('conpassError');
-        newpasserror.textContent = '';
-        conpasserror.textContent = '';
-        document.getElementById('conpass').disabled = true;
+    const emailError = $("#emailError");
+    const newPasswordError = $("#newPasswordError");
+    const confirmPasswordError = $("#confirmPasswordError");
+    const passwordStrength = $("#passwordStrength");
 
-        // Regular expression for password validation
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
+    function validateInputs() {
         let isValid = true;
+        emailError.hide();
+        const email = emailInput.val();
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const emailExists = users.some(user => user.email.toLowerCase() === email.toLowerCase());
+        if (!emailExists) {
+            emailError.show();
+            isValid = false;
+        }
 
-        // Validate password
-        if (!newpass) {
-            newpasserror.textContent = 'Please enter a new password.';
-            newpasserror.style.display = 'block';
+        newPasswordError.hide();
+        const newPassword = newPasswordInput.val();
+        if (!passwordRegex.test(newPassword)) {
+            newPasswordError.show();
             isValid = false;
-        } else if (!passwordRegex.test(newpass)) {
-            newpasserror.textContent = 'Password must be at least 8 characters, include a mix of upper and lower case letters, numbers, and special characters.';
-            // newpasserror.style.display = 'block';
-            isValid = false;
+        }
+
+        if (newPassword.length < 8) {
+            passwordStrength.text("Weak").css("color", "red");
+        } else if (passwordRegex.test(newPassword)) {
+            passwordStrength.text("Strong").css("color", "green");
         } else {
-            document.getElementById('conpass').disabled = false;
+            passwordStrength.text("Medium").css("color", "orange");
         }
 
-        // Check password confirmation
-        if (newpass !== confpass) {
-            conpasserror.textContent = 'Passwords do not match.';
-            // conpasserror.style.display = 'block';
+        confirmPasswordError.hide();
+        if (newPassword !== confirmPasswordInput.val()) {
+            confirmPasswordError.show();
             isValid = false;
         }
 
-        if (isValid) {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        resetButton.prop("disabled", !isValid);
+    }
 
-            if (currentUser) {
-                const key = CryptoJS.SHA256(currentUser.email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                console.log('Before password update:', users); 
-                const userIndex = users.findIndex(user => user.email === currentUser.email);
-                const encryptedNewPassword = CryptoJS.AES.encrypt(newpass, key).toString();
+    emailInput.on("input", validateInputs);
+    newPasswordInput.on("input", validateInputs);
+    confirmPasswordInput.on("input", validateInputs);
 
-                if (userIndex !== -1) {
-                    // Update the password
-                    users[userIndex].encryptedPassword = encryptedNewPassword;
-                    users[userIndex].resetApproved=false ;   // after reset password resetApproved reset to default value
-                    console.log("Updated Users:", users);  // Log updated users here
+    $("#resetForm").on("submit", function (e) {
+        e.preventDefault();
+        const email = emailInput.val();
+        const newPassword = newPasswordInput.val();
 
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert('Password successfully reset!');
-                    window.location = 'login.html'; // Redirect to login page after reset
-                } else {
-                    alert('User not found in the system.');
-                }
-            } else {
-                alert('No user is currently logged in.');       
-                document.getElementById('resetform').reset(); // Reset the form
+        const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(newPassword, key).toString();
 
-            }
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        const userIndex = users.findIndex(user => user.email.toLowerCase() === email.toLowerCase());
+
+        if (userIndex !== -1 && users[userIndex].resetApproved) {
+            users[userIndex].encryptedPassword = encryptedPassword;
+            users[userIndex].resetApproved = false;
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("Password has been reset successfully!");
+            window.location.href = "login.html";
+        } else {
+            alert("Error: Reset request has not been approved or email not found.");
         }
     });
 });

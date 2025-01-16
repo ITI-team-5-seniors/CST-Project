@@ -4,8 +4,10 @@ $(function () {
         const tableBody = $('#user-table-body');
         tableBody.empty();
 
-        if (users.length > 0) {
-            users.forEach((user, index) => {
+        const customers = users.filter((user) => user.role === 'customer');
+
+        if (customers.length > 0) {
+            customers.forEach((user, index) => {
                 const row = `
                     <tr data-index="${index}">
                         <td>#${index + 1}</td>
@@ -26,11 +28,12 @@ $(function () {
             tableBody.append(row);
         }
     }
-
     function displaySellers() {
-        const sellers = JSON.parse(localStorage.getItem('sellers')) || [];
+        const users = JSON.parse(localStorage.getItem('users')) || [];
         const tableBody = $('#seller-table-body');
         tableBody.empty();
+
+        const sellers = users.filter((user) => user.role === 'seller');
 
         if (sellers.length > 0) {
             sellers.forEach((seller, index) => {
@@ -86,6 +89,7 @@ $(function () {
             button.addEventListener("click", function () {
                 const requestId = button.getAttribute("data-id");
                 handleRequestAction(requestId, "approved");
+
             });
         });
 
@@ -104,7 +108,7 @@ $(function () {
             const users = JSON.parse(localStorage.getItem("users")) || [];
             const userIndex = users.findIndex((user) => user.email === request.email);
 
-            if (userIndex !== -1) {
+            if (userIndex !== -1 ) {
                 users[userIndex].resetApproved = true; // Mark the user for password reset
                 localStorage.setItem("users", JSON.stringify(users));
             }
@@ -116,6 +120,8 @@ $(function () {
 
         loadfromrequests();
         alert(`Request ID ${requestId} has been ${action}.`);
+        // users[userIndex].resetApproved = false;
+
     }
 
 
@@ -129,16 +135,20 @@ $(function () {
         localStorage.setItem('users', JSON.stringify(users));
         displayUsers();
     });
-
     $(document).on('click', '.delete-seller', function () {
         const row = $(this).closest('tr');
         const index = row.data('index');
 
-        const sellers = JSON.parse(localStorage.getItem('sellers')) || [];
-        sellers.splice(index, 1);
-        localStorage.setItem('sellers', JSON.stringify(sellers));
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const sellers = users.filter((user) => user.role === 'seller');
+
+        const removedSeller = sellers.splice(index, 1)[0];
+        const updatedUsers = users.filter(user => user.username !== removedSeller.username);
+        
+        localStorage.setItem('users', JSON.stringify(updatedUsers));
         displaySellers();
     });
+
     $(document).ready(function () {
         // Function to load checkout orders and display in table and cards
         function loadCheckoutOrders() {
