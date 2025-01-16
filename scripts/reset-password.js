@@ -1,4 +1,4 @@
-document.addEventListener('load ', function () {
+$(document).ready(function () {
     const emailInput = $("#email");
     const newPasswordInput = $("#newPassword");
     const confirmPasswordInput = $("#confirmPassword");
@@ -13,17 +13,15 @@ document.addEventListener('load ', function () {
 
     function validateInputs() {
         let isValid = true;
-        //email validations
         emailError.hide();
         const email = emailInput.val();
         const users = JSON.parse(localStorage.getItem("users")) || [];
-        const emailExists = users.some(user => user.email === email);
+        const emailExists = users.some(user => user.email.toLowerCase() === email.toLowerCase());
         if (!emailExists) {
             emailError.show();
             isValid = false;
         }
 
-        // Validate new password
         newPasswordError.hide();
         const newPassword = newPasswordInput.val();
         if (!passwordRegex.test(newPassword)) {
@@ -31,7 +29,6 @@ document.addEventListener('load ', function () {
             isValid = false;
         }
 
-        // Password strength indicator
         if (newPassword.length < 8) {
             passwordStrength.text("Weak").css("color", "red");
         } else if (passwordRegex.test(newPassword)) {
@@ -40,7 +37,6 @@ document.addEventListener('load ', function () {
             passwordStrength.text("Medium").css("color", "orange");
         }
 
-        // Validate confirm password
         confirmPasswordError.hide();
         if (newPassword !== confirmPasswordInput.val()) {
             confirmPasswordError.show();
@@ -59,18 +55,20 @@ document.addEventListener('load ', function () {
         const email = emailInput.val();
         const newPassword = newPasswordInput.val();
 
-        const key = CryptoJS.SHA256(email +'s33gggggggggggdsgbltevfmdlvmflgfg').toString();
+        const key = CryptoJS.SHA256(email + 's33gggggggggggdsgbltevfmdlvmflgfg').toString();
         const encryptedPassword = CryptoJS.AES.encrypt(newPassword, key).toString();
 
         let users = JSON.parse(localStorage.getItem("users")) || [];
-        const userIndex = users.findIndex(user => user.email === email);
+        const userIndex = users.findIndex(user => user.email.toLowerCase() === email.toLowerCase());
 
         if (userIndex !== -1 && users[userIndex].resetApproved) {
             users[userIndex].encryptedPassword = encryptedPassword;
-            localStorage.setItem("users", JSON.stringify(users));
             users[userIndex].resetApproved = false;
+            localStorage.setItem("users", JSON.stringify(users));
             alert("Password has been reset successfully!");
             window.location.href = "login.html";
+        } else {
+            alert("Error: Reset request has not been approved or email not found.");
         }
     });
 });

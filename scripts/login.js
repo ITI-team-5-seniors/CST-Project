@@ -59,7 +59,8 @@ $(function () {
           window.location = 'admindashboard.html';
         } else if (userRole === 'seller') {
           window.location = 'seller.html';  // Redirect to seller page
-        } else {
+        } else if (userRole=='customer'){
+
           window.location = 'home.html';  // Redirect to home page for regular users
         }
         return true;

@@ -163,7 +163,7 @@ const renderOrders = () => {
                             <td>${order.date}</td>
                             <td>${productInfo ? productInfo.name : `Unknown Product (ID: ${item.productId})`}</td> 
                             <td>${order.total}</td>
-                            <td><img src="${order.productImage || 'placeholder.jpg'}" width="50" height="50"></td>
+                            <td><img src="${productInfo.image|| 'placeholder.jpg'}" width="50" height="50"></td>
                             <td>${item.quantity}</td>
                             <td>${order.status}</td>
                         </tr>

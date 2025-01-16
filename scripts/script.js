@@ -9,7 +9,6 @@ var imgarr= ["../photos/1.png","../photos/2.png","../photos/3.png","../photos/4.
               if(i>=imgarr.length) i=0;
               myimg.src= imgarr[i];
           }
-
           function toggleMenu() {
             const nav = document.querySelector('.nav');
             const menuToggle = document.getElementById('menu-toggle');
